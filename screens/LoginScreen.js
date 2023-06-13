@@ -7,6 +7,8 @@ import Header from "../components/Header";
 import Button from "../components/Button";
 import TextInput from "../components/TextInput";
 import BackButton from "../components/BackButton";
+import { SigninAPI } from "../services/IAMService";
+import axios from "axios";
 import { theme } from "../core/theme";
 
 export default function LoginScreen({ navigation }) {
@@ -14,15 +16,39 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState({ value: "", error: "" });
 
   const onLoginPressed = () => {
+    var request = axios.post(
+      "http://192.168.1.24:8090/api/iam/authentication",
+      {
+        username: email.value,
+        password: password.value,
+      }
+    );
+
+    request
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(`Error here: ${error}`);
+      });
+
     // if (emailError || passwordError) {
     //   setEmail({ ...email, error: emailError });
     //   setPassword({ ...password, error: passwordError });
     //   return;
     // }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "Dashboard" }],
-    });
+    // var request = SigninAPI(email.value, password.value);
+    // request
+    //   .then((response) => {
+    //     // console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     console.log(`Error here: ${error}`);
+    //   });
+    // navigation.reset({
+    //   index: 0,
+    //   routes: [{ name: "Dashboard" }],
+    // });
   };
 
   return (
@@ -51,19 +77,19 @@ export default function LoginScreen({ navigation }) {
         errorText={password.error}
         secureTextEntry
       />
-      <View style={styles.forgotPassword}>
+      {/* <View style={styles.forgotPassword}>
         <TouchableOpacity
           onPress={() => navigation.navigate("ResetPasswordScreen")}
         >
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       <Button mode="contained" onPress={onLoginPressed}>
         Login
       </Button>
       <View style={styles.row}>
         <Text>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace("RegisterScreen")}>
+        <TouchableOpacity onPress={() => navigation.replace("SignupScreen")}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>
