@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: process.env.API_ENDPOINT,
+  baseURL: "http://192.168.1.24:8090/api",
 });
 
 // const token = localStorage.getItem("accessToken");

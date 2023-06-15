@@ -8,43 +8,22 @@ import Button from "../components/Button";
 import TextInput from "../components/TextInput";
 import BackButton from "../components/BackButton";
 import { SigninAPI } from "../services/IAMService";
-import axios from "axios";
+import { EmailValidator } from "../helpers/EmailValidator";
 import { theme } from "../core/theme";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
 
-  const onLoginPressed = () => {
-    var request = axios.post(
-      "http://192.168.1.24:8090/api/iam/authentication",
-      {
-        username: email.value,
-        password: password.value,
-      }
-    );
+  const onLoginPressed = async () => {
+    const emailError = EmailValidator(email.value);
+    if (emailError) {
+      setEmail({ ...email, error: emailError });
+      return;
+    }
+    var response = await SigninAPI(email.value, password.value);
+    console.log(response);
 
-    request
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(`Error here: ${error}`);
-      });
-
-    // if (emailError || passwordError) {
-    //   setEmail({ ...email, error: emailError });
-    //   setPassword({ ...password, error: passwordError });
-    //   return;
-    // }
-    // var request = SigninAPI(email.value, password.value);
-    // request
-    //   .then((response) => {
-    //     // console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     console.log(`Error here: ${error}`);
-    //   });
     // navigation.reset({
     //   index: 0,
     //   routes: [{ name: "Dashboard" }],

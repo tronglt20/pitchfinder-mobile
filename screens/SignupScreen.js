@@ -21,7 +21,7 @@ export default function SignupScreen({ navigation }) {
     error: "",
   });
 
-  const onSignUpPressed = () => {
+  const onSignUpPressed = async () => {
     const emailError = EmailValidator(email.value);
     const passwordError = PasswordValidator(password.value);
     const passwordConfirmError = PasswordConfirmValidator(
@@ -36,16 +36,13 @@ export default function SignupScreen({ navigation }) {
       return;
     }
 
-    var response = SignupAPI(
+    var response = await SignupAPI(
       email.value,
       password.value,
       passwordConfirm.value
     );
-    response
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => console.error(error));
+
+    console.log(response);
 
     // navigation.reset({
     //   index: 0,
