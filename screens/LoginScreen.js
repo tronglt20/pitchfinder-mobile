@@ -7,11 +7,14 @@ import Header from "../components/Header";
 import Button from "../components/Button";
 import TextInput from "../components/TextInput";
 import BackButton from "../components/BackButton";
+import { useDispatch } from "react-redux";
+import { AuthActions } from "../stores/AuthReducer";
 import { SigninAPI } from "../services/IAMService";
 import { EmailValidator } from "../helpers/EmailValidator";
 import { theme } from "../core/theme";
 
 export default function LoginScreen({ navigation }) {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
 
@@ -22,12 +25,14 @@ export default function LoginScreen({ navigation }) {
       return;
     }
     var response = await SigninAPI(email.value, password.value);
-    console.log(response);
+    if ((response.status = 200)) {
+      dispatch(AuthActions.login(response));
 
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [{ name: "Dashboard" }],
-    // });
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "FilterOptionScreen" }],
+      });
+    }
   };
 
   return (
@@ -56,13 +61,6 @@ export default function LoginScreen({ navigation }) {
         errorText={password.error}
         secureTextEntry
       />
-      {/* <View style={styles.forgotPassword}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("ResetPasswordScreen")}
-        >
-          <Text style={styles.forgot}>Forgot your password?</Text>
-        </TouchableOpacity>
-      </View> */}
       <Button mode="contained" onPress={onLoginPressed}>
         Login
       </Button>

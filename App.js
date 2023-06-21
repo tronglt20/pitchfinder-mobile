@@ -8,7 +8,6 @@ export default function App() {
     <Provider store={Store}>
       <View style={styles.rootScreen}>
         <SafeAreaView style={styles.rootScreen}>
-          {/* Content here */}
           <AppContainer />
         </SafeAreaView>
       </View>

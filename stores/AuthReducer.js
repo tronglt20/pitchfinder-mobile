@@ -1,22 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-// const token = localStorage.getItem("accessToken");
-
-const initialAuthState = {
-  authenticated: false,
-  user: {},
-};
+import * as SecureStore from "expo-secure-store";
 
 const authSlice = createSlice({
-  name: "authentication",
-  initialState: initialAuthState,
+  name: "auth",
+  initialState: {
+    user: {},
+    accessToken: SecureStore.getItemAsync("accessToken"),
+  },
   reducers: {
     login(state, actions) {
-      state.authenticated = true;
-      // localStorage.setItem("accessToken", actions.payload.data.accessToken);
+      state.accessToken = SecureStore.setItemAsync(
+        "accessToken",
+        actions.payload.data.accessToken
+      );
     },
     logout(state) {
-      state.authenticated = false;
-      // localStorage.removeItem("accessToken");
+      SecureStore.deleteItemAsync("accessToken");
     },
     setCurrentUser(state, actions) {
       state.user = actions.payload.data;
