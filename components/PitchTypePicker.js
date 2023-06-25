@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { theme } from "../core/theme";
 
-export default function PitchTypePicker() {
+export default function PitchTypePicker({ onSelect }) {
   const [selectedSize, setSelectedSize] = useState("");
 
   const handleSizeSelection = (size) => {
     setSelectedSize(size);
+    onSelect(size);
   };
 
   return (

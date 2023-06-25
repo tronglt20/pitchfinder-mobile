@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { theme } from "../core/theme";
 import { Button } from "react-native-paper";
 
-export default function TimePicker() {
+export default function TimePicker({ onSelect }) {
   const [startTime, setStartTime] = useState(19);
   const [endTime, setEndTime] = useState(20);
+
+  useEffect(() => {
+    handleTimeSelection();
+  }, []);
 
   const handlePrevButtonPress = () => {
     if (startTime === 0) {
@@ -15,6 +19,7 @@ export default function TimePicker() {
       setStartTime(startTime - 1);
       setEndTime(endTime - 1);
     }
+    handleTimeSelection();
   };
 
   const handleNextButtonPress = () => {
@@ -25,6 +30,18 @@ export default function TimePicker() {
       setStartTime(startTime + 1);
       setEndTime(endTime + 1);
     }
+    handleTimeSelection();
+  };
+
+  const formattedStartTime = startTime < 10 ? `0${startTime}` : startTime;
+  const formattedEndTime = endTime < 10 ? `0${endTime}` : endTime;
+
+  const handleTimeSelection = () => {
+    const selectedTime = {
+      startTime: formattedStartTime,
+      endTime: formattedEndTime,
+    };
+    onSelect(selectedTime);
   };
 
   return (
@@ -40,8 +57,7 @@ export default function TimePicker() {
         </Button>
         <View style={styles.timeFrameBox}>
           <Text style={styles.timeFrame}>
-            {startTime < 10 ? `0${startTime}` : startTime}:00 -{" "}
-            {endTime < 10 ? `0${endTime}` : endTime}:00
+            {formattedStartTime}:00 - {formattedEndTime}:00
           </Text>
           <Text style={styles.descript}>Rental will last 1 hour</Text>
         </View>

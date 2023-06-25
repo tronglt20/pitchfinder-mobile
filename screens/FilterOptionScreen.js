@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import Background from "../components/Background";
-import Header from "../components/Header";
 import CalenderPicker from "../components/CalenderPicker";
 import TimePicker from "../components/TimePicker";
 import PitchTypePicker from "../components/PitchTypePicker";
@@ -8,17 +7,28 @@ import { Button } from "react-native-paper";
 import { View, StyleSheet } from "react-native";
 
 export default function FilterOptionScreen({ navigation }) {
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState({
+    startTime: null,
+    endTime: null,
+  });
+  const [selectedPitchType, setSelectedPitchType] = useState(null);
+
+  const handleSearch = () => {
+    console.log("Selected Date:", selectedDate);
+    console.log("Selected Time:", selectedTime);
+    console.log("Selected Pitch Type:", selectedPitchType);
+  };
+
   return (
     <Background>
-      <CalenderPicker />
-      <PitchTypePicker />
-      <TimePicker />
+      <CalenderPicker onSelect={setSelectedDate} />
+      <PitchTypePicker onSelect={setSelectedPitchType} />
+      <TimePicker onSelect={setSelectedTime} />
       <View style={styles.searchButtonContainer}>
         <Button
           mode="contained"
-          onPress={() => {
-            // Handle button press action here
-          }}
+          onPress={handleSearch}
           style={styles.searchButton}
           labelStyle={styles.searchButtonLabel}
         >
