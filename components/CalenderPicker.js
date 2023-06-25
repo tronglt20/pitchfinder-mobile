@@ -23,7 +23,7 @@ export default class CalenderPicker extends Component {
     const startDate = selectedStartDate ? selectedStartDate.toString() : "";
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>Booking time frame</Text>
+        <Text style={styles.heading}>Which date are you looking for?</Text>
         <View style={styles.calendar}>
           <CalendarPicker
             minDate={minDate}

@@ -11,7 +11,7 @@ export default function PitchTypePicker() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Type</Text>
+      <Text style={styles.heading}>Pitch Type</Text>
       <View style={styles.typeContainer}>
         <TouchableOpacity
           style={[
@@ -84,16 +84,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   typeOption: {
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: theme.colors.primary,
-    padding: 10,
+    paddingHorizontal: 24,
+    paddingVertical: 10,
     borderRadius: 8,
   },
   selectedOption: {
     backgroundColor: theme.colors.primary,
   },
   optionText: {
-    fontSize: 16,
+    fontSize: 14,
     color: theme.colors.primary,
   },
   selectedText: {

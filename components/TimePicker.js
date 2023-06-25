@@ -6,30 +6,30 @@ import { Button } from "react-native-paper";
 export default function TimePicker() {
   const [startTime, setStartTime] = useState(19);
   const [endTime, setEndTime] = useState(20);
+
   const handlePrevButtonPress = () => {
     if (startTime === 0) {
       setStartTime(23);
-      setEndTime(24);
-      return;
+      setEndTime(0);
+    } else {
+      setStartTime(startTime - 1);
+      setEndTime(endTime - 1);
     }
-    setStartTime(startTime - 1);
-    setEndTime(endTime - 1);
   };
 
   const handleNextButtonPress = () => {
     if (endTime === 24) {
       setStartTime(0);
       setEndTime(1);
-      return;
+    } else {
+      setStartTime(startTime + 1);
+      setEndTime(endTime + 1);
     }
-
-    setStartTime(startTime + 1);
-    setEndTime(endTime + 1);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Booking time frame</Text>
+      <Text style={styles.heading}>Time Frame</Text>
       <View style={styles.selectionBox}>
         <Button
           style={styles.button}
@@ -40,7 +40,8 @@ export default function TimePicker() {
         </Button>
         <View style={styles.timeFrameBox}>
           <Text style={styles.timeFrame}>
-            {startTime}:00 - {endTime}:00
+            {startTime < 10 ? `0${startTime}` : startTime}:00 -{" "}
+            {endTime < 10 ? `0${endTime}` : endTime}:00
           </Text>
           <Text style={styles.descript}>Rental will last 1 hour</Text>
         </View>
@@ -59,6 +60,9 @@ export default function TimePicker() {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
+    borderBottomWidth: 2,
+    borderBottomColor: "#EDF0F7",
+    paddingBottom: 20,
   },
   heading: {
     marginTop: 20,
@@ -77,11 +81,12 @@ const styles = StyleSheet.create({
   timeFrame: {
     textAlign: "center",
     fontSize: 20,
+    color: theme.colors.primary,
   },
   descript: {
     marginTop: 6,
     textAlign: "center",
-    color: "#9B9B9B",
+    color: theme.colors.text,
   },
   button: {
     height: 36,
@@ -90,10 +95,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: "black",
+    borderColor: theme.colors.primary,
+    backgroundColor: theme.colors.background,
   },
   buttonLabel: {
     fontSize: 17,
-    color: "black",
+    color: theme.colors.primary,
   },
 });

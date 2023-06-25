@@ -14,7 +14,16 @@ export default function FilterOptionScreen({ navigation }) {
       <PitchTypePicker />
       <TimePicker />
       <View style={styles.searchButtonContainer}>
-        <Button>Searching</Button>
+        <Button
+          mode="contained"
+          onPress={() => {
+            // Handle button press action here
+          }}
+          style={styles.searchButton}
+          labelStyle={styles.searchButtonLabel}
+        >
+          Search
+        </Button>
       </View>
     </Background>
   );
@@ -24,5 +33,16 @@ const styles = StyleSheet.create({
   searchButtonContainer: {
     width: "100%",
     flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: 36,
+    paddingHorizontal: 16,
+  },
+  searchButton: {
+    borderRadius: 24,
+  },
+  searchButtonLabel: {
+    fontSize: 16,
+    fontWeight: "bold",
+    paddingVertical: 6,
   },
 });
