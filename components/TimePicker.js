@@ -58,7 +58,6 @@ export default function TimePicker() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     width: "100%",
   },
   heading: {
@@ -70,7 +69,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 20,
+    marginVertical: 20,
   },
   timeFrameBox: {
     flex: 4,

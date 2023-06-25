@@ -1,18 +1,28 @@
 import React from "react";
 import Background from "../components/Background";
-import Logo from "../components/Logo";
 import Header from "../components/Header";
-import Button from "../components/Button";
-import Paragraph from "../components/Paragraph";
 import CalenderPicker from "../components/CalenderPicker";
 import TimePicker from "../components/TimePicker";
+import PitchTypePicker from "../components/PitchTypePicker";
+import { Button } from "react-native-paper";
+import { View, StyleSheet } from "react-native";
 
 export default function FilterOptionScreen({ navigation }) {
   return (
     <Background>
-      <Header>Pitch Finder</Header>
       <CalenderPicker />
+      <PitchTypePicker />
       <TimePicker />
+      <View style={styles.searchButtonContainer}>
+        <Button>Searching</Button>
+      </View>
     </Background>
   );
 }
+
+const styles = StyleSheet.create({
+  searchButtonContainer: {
+    width: "100%",
+    flex: 1,
+  },
+});

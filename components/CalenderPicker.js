@@ -23,12 +23,15 @@ export default class CalenderPicker extends Component {
     const startDate = selectedStartDate ? selectedStartDate.toString() : "";
     return (
       <View style={styles.container}>
-        <CalendarPicker
-          minDate={minDate}
-          onDateChange={this.onDateChange}
-          selectedDayColor={theme.colors.primary}
-          selectedDayTextColor="#FFFFFF"
-        />
+        <Text style={styles.heading}>Booking time frame</Text>
+        <View style={styles.calendar}>
+          <CalendarPicker
+            minDate={minDate}
+            onDateChange={this.onDateChange}
+            selectedDayColor={theme.colors.primary}
+            selectedDayTextColor="#FFFFFF"
+          />
+        </View>
       </View>
     );
   }
@@ -36,8 +39,15 @@ export default class CalenderPicker extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    width: "100%",
     borderBottomWidth: 2,
     borderBottomColor: "#EDF0F7",
+  },
+  heading: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  calendar: {
+    marginVertical: 20,
   },
 });
