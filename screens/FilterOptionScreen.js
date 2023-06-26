@@ -18,6 +18,7 @@ export default function FilterOptionScreen({ navigation }) {
     console.log("Selected Date:", selectedDate);
     console.log("Selected Time:", selectedTime);
     console.log("Selected Pitch Type:", selectedPitchType);
+    navigation.navigate("PitchsScreen");
   };
 
   return (

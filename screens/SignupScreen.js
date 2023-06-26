@@ -43,11 +43,6 @@ export default function SignupScreen({ navigation }) {
     );
 
     console.log(response);
-
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [{ name: "Dashboard" }],
-    // });
   };
 
   return (
