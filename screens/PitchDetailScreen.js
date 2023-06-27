@@ -12,6 +12,10 @@ export default function PitchDetailScreen({ navigation, route }) {
     navigation.replace("PitchsScreen");
   };
 
+  const orderHandler = () => {
+    navigation.navigate("OrderConfirmScreen", { pitch });
+  };
+
   return (
     <Background>
       <BackButton goBack={goBack} />
@@ -65,7 +69,7 @@ export default function PitchDetailScreen({ navigation, route }) {
           </Text>
           <Text style={styles.orderInfo}>{`14:00 - 15:00 | 16/05/2022`}</Text>
         </View>
-        <Button mode="contained" onPress={() => console.log("Order pressed")}>
+        <Button mode="contained" onPress={orderHandler}>
           Order
         </Button>
       </View>
@@ -140,7 +144,6 @@ const styles = StyleSheet.create({
   },
   orderInfo: {
     fontSize: 16,
-    marginBottom: 8,
   },
   priceStyle: {
     marginBottom: 10,

@@ -108,6 +108,8 @@ const styles = StyleSheet.create({
   pitchHeading: {
     fontWeight: "bold",
     fontSize: 24,
+    color: "black",
+    marginTop: 5,
   },
   pitchName: {
     fontSize: 22,

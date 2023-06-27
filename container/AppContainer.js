@@ -8,6 +8,7 @@ import SignupScreen from "../screens/SignupScreen";
 import FilterOptionScreen from "../screens/FilterOptionScreen";
 import PitchsScreen from "../screens/PitchsScreen";
 import PitchDetailScreen from "../screens/PitchDetailScreen";
+import OrderConfirmScreen from "../screens/OrderConfirmScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,10 @@ export default function AppContainer() {
         />
         <Stack.Screen name="PitchsScreen" component={PitchsScreen} />
         <Stack.Screen name="PitchDetailScreen" component={PitchDetailScreen} />
+        <Stack.Screen
+          name="OrderConfirmScreen"
+          component={OrderConfirmScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
