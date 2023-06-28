@@ -3,6 +3,7 @@ import {
   ImageBackground,
   StyleSheet,
   KeyboardAvoidingView,
+  SafeAreaView,
 } from "react-native";
 import { theme } from "../core/theme";
 
@@ -13,9 +14,11 @@ export default function Background({ children }) {
       resizeMode="repeat"
       style={styles.background}
     >
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
-        {children}
-      </KeyboardAvoidingView>
+      <SafeAreaView style={styles.safeView}>
+        <KeyboardAvoidingView style={styles.container} behavior="padding">
+          {children}
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     </ImageBackground>
   );
 }
@@ -34,5 +37,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     // alignItems: "center",
     justifyContent: "center",
+  },
+  safeView: {
+    flex: 1,
   },
 });

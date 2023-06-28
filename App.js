@@ -7,9 +7,7 @@ export default function App() {
   return (
     <Provider store={Store}>
       <View style={styles.rootScreen}>
-        <SafeAreaView style={styles.rootScreen}>
-          <AppContainer />
-        </SafeAreaView>
+        <AppContainer />
       </View>
     </Provider>
   );
