@@ -1,5 +1,4 @@
 import axios from "./axios";
-
 const SignupAPI = (email, password, passwordConfirm) => {
   return axios.post("/iam/authentication/sign-up", {
     email,
@@ -13,4 +12,8 @@ const SigninAPI = (username, password) => {
   return axios.post("/iam/authentication", { username, password });
 };
 
-export { SigninAPI, SignupAPI };
+const CurrentUserAPI = () => {
+  return axios.get("/iam/authentication/current-user");
+};
+
+export { SigninAPI, SignupAPI, CurrentUserAPI };

@@ -6,7 +6,9 @@ import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import BackButton from "../components/BackButton";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function PitchsScreen({ navigation }) {
+export default function PitchsScreen({ navigation, route }) {
+  const { pitchs } = route.params;
+
   const goBack = () => {
     navigation.replace("FilterOptionScreen");
   };

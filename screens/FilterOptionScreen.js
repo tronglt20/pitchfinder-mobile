@@ -5,6 +5,7 @@ import TimePicker from "../components/TimePicker";
 import PitchTypePicker from "../components/PitchTypePicker";
 import { Button } from "react-native-paper";
 import { View, StyleSheet } from "react-native";
+import { FilterStoresAPI } from "../services/PitchService";
 
 export default function FilterOptionScreen({ navigation }) {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -14,11 +15,25 @@ export default function FilterOptionScreen({ navigation }) {
   });
   const [selectedPitchType, setSelectedPitchType] = useState(null);
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     console.log("Selected Date:", selectedDate);
     console.log("Selected Time:", selectedTime);
     console.log("Selected Pitch Type:", selectedPitchType);
-    navigation.navigate("PitchsScreen");
+
+    var response = await FilterStoresAPI(
+      selectedPitchType,
+      selectedDate.startTime,
+      selectedDate.endTime,
+      selectedDate
+    );
+
+    if (response.status == 200) {
+      console.log(response);
+      // navigation.navigate("PitchsScreen", response);
+      console.log(`success: ${response}`);
+    } else {
+      console.log(`error: ${response}`);
+    }
   };
 
   return (

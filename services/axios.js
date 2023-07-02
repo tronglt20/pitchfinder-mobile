@@ -1,13 +1,11 @@
 import axios from "axios";
-import * as SecureStore from "expo-secure-store";
-
+import { useSelector } from "react-redux";
 const instance = axios.create({
-  baseURL: "http://192.168.1.24:8090/api",
+  baseURL: "http://192.168.1.73:8090/api",
 });
 
-const token = SecureStore.getItemAsync("accessToken");
-if (token) {
-  instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-}
+// if (accesstoken) {
+//   instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+// }
 
 export default instance;

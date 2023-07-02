@@ -1,7 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useSelector } from "react-redux";
-
+import { CurrentUserAPI } from "../services/IAMService";
+import React, { useEffect, useState } from "react";
 import StartScreen from "../screens/StartScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
@@ -13,11 +14,23 @@ import OrderConfirmScreen from "../screens/OrderConfirmScreen";
 const Stack = createNativeStackNavigator();
 
 export default function AppContainer() {
-  const accessToken = useSelector((state) => state.auth.accessToken);
+  const [isAuth, setIsAuth] = useState(false);
+
+  // const fetchData = async () => {
+  //   var response = await CurrentUserAPI();
+  //   if (response.status === 200) {
+  //     setIsAuth(true);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={accessToken ? "FilterOptionScreen" : "StartScreen"}
+        initialRouteName={isAuth ? "FilterOptionScreen" : "StartScreen"}
         screenOptions={{
           headerShown: false,
         }}
