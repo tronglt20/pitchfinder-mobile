@@ -4,10 +4,10 @@ import { theme } from "../core/theme";
 
 export default function PitchTypePicker({ onSelect }) {
   const [selectedSize, setSelectedSize] = useState("");
-
+  var dict = { "Size 5": 1, "Size 7": 2, "Size 11": 3 };
   const handleSizeSelection = (size) => {
     setSelectedSize(size);
-    onSelect(size);
+    onSelect(dict[size]);
   };
 
   return (

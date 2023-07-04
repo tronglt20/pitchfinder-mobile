@@ -3,11 +3,15 @@ import Background from "../components/Background";
 import CalenderPicker from "../components/CalenderPicker";
 import TimePicker from "../components/TimePicker";
 import PitchTypePicker from "../components/PitchTypePicker";
+import { useDispatch } from "react-redux";
 import { Button } from "react-native-paper";
 import { View, StyleSheet } from "react-native";
 import { FilterStoresAPI } from "../services/PitchService";
+import { PitchActions } from "../stores/PitchReducer";
 
 export default function FilterOptionScreen({ navigation }) {
+  const dispatch = useDispatch();
+
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState({
     startTime: null,
@@ -16,26 +20,25 @@ export default function FilterOptionScreen({ navigation }) {
   const [selectedPitchType, setSelectedPitchType] = useState(null);
 
   const handleSearch = async () => {
-    console.log("Selected Date:", selectedDate);
-    console.log("Selected Time:", selectedTime);
-    console.log("Selected Pitch Type:", selectedPitchType);
+    // console.log("Selected Pitch Type:", selectedPitchType);
+    // console.log("Start Time:", `${selectedTime.startTime}:00:00`);
+    // console.log("End Time:", `${selectedTime.endTime}:00:00`);
+    // console.log("Selected Date:", selectedDate);
 
     var response = await FilterStoresAPI(
       selectedPitchType,
-      selectedDate.startTime,
-      selectedDate.endTime,
+      `${selectedTime.startTime}:00:00`,
+      `${selectedTime.endTime}:00:00`,
       selectedDate
     );
 
     if (response.status == 200) {
-      console.log(response);
-      // navigation.navigate("PitchsScreen", response);
-      console.log(`success: ${response}`);
+      dispatch(PitchActions.setPitches(response.data));
+      navigation.navigate("PitchsScreen");
     } else {
-      console.log(`error: ${response}`);
+      console.log(`error`);
     }
   };
-
   return (
     <Background>
       <CalenderPicker onSelect={setSelectedDate} />

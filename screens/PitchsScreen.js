@@ -2,40 +2,17 @@ import React from "react";
 import Background from "../components/Background";
 import { Text, List, Card, Title } from "react-native-paper";
 import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import { useSelector } from "react-redux";
 
 import BackButton from "../components/BackButton";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function PitchsScreen({ navigation, route }) {
-  const { pitchs } = route.params;
+export default function PitchsScreen({ navigation }) {
+  const pitches = useSelector((state) => state.pitch.pitches);
 
   const goBack = () => {
     navigation.replace("FilterOptionScreen");
   };
-
-  // Sample pitches data
-  const pitches = [
-    {
-      id: 1,
-      image: "../assets/pitchImage.png",
-      name: "Pitch A",
-      type: "Size 5",
-      address: "123 ABC Street, Son Tra, Da Nang",
-      phone: "0974863798",
-      rating: 4.5,
-      price: "50",
-    },
-    {
-      id: 2,
-      image: "",
-      name: "Pitch B",
-      type: "Size 7",
-      address: "456 XYZ Street",
-      phone: "0974863798",
-      rating: 4.2,
-      price: "40",
-    },
-  ];
 
   const renderPitchItem = (pitch) => {
     const handlePitchPress = () => {
@@ -44,8 +21,8 @@ export default function PitchsScreen({ navigation, route }) {
 
     return (
       <TouchableOpacity onPress={handlePitchPress}>
-        <Card key={pitch.id} style={styles.card}>
-          <Card.Cover source={pitch.image} style={styles.cardImage} />
+        <Card key={pitch.storeId} style={styles.card}>
+          <Card.Cover source={pitch.backgroundUrl} style={styles.cardImage} />
           <Card.Content style={styles.cardContent}>
             <View style={styles.headingStyle}>
               <Title style={styles.pitchName}>{pitch.name}</Title>
@@ -60,7 +37,7 @@ export default function PitchsScreen({ navigation, route }) {
               </View>
             </View>
             <Text>{`${pitch.type} - ${pitch.address}`}</Text>
-            <Text style={styles.priceStyle}>{`$${pitch.price} per hour`}</Text>
+            <Text style={styles.priceStyle}>{`${pitch.price} per hour`}</Text>
           </Card.Content>
         </Card>
       </TouchableOpacity>

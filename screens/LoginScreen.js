@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import Button from "../components/Button";
 import TextInput from "../components/TextInput";
 import BackButton from "../components/BackButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { AuthActions } from "../stores/AuthReducer";
 import { SigninAPI } from "../services/IAMService";
@@ -26,6 +27,7 @@ export default function LoginScreen({ navigation }) {
     }
     var response = await SigninAPI(email.value, password.value);
     if ((response.status = 200)) {
+      await AsyncStorage.setItem("accessToken", response.data.accessToken);
       dispatch(AuthActions.login(response));
 
       navigation.reset({
