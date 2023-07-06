@@ -2,11 +2,11 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Card } from "react-native-paper";
 import Background from "../components/Background";
-import BackButton from "../components/BackButton";
-import Icon from "react-native-vector-icons/FontAwesome";
+import { useSelector } from "react-redux";
 
 export default function OrderConfirmScreen({ navigation, route }) {
   const { pitch } = route.params;
+  const selectedType = useSelector((state) => state.pitch.selectedType);
 
   const goBack = () => {
     navigation.navigate("PitchDetailScreen", { pitch });
@@ -28,6 +28,10 @@ export default function OrderConfirmScreen({ navigation, route }) {
           <View style={styles.infoContainer}>
             <Text style={styles.infoTitle}>Address</Text>
             <Text style={styles.infoValue}>{pitch.address}</Text>
+          </View>
+          <View style={styles.infoContainer}>
+            <Text style={styles.infoTitle}>Type</Text>
+            <Text style={styles.infoValue}>{selectedType}</Text>
           </View>
           <View style={styles.row}>
             <View style={styles.infoContainer}>
@@ -83,7 +87,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   infoContainer: {
-    marginTop: 10,
+    marginTop: 20,
   },
   infoTitle: {
     fontSize: 12,
@@ -95,12 +99,11 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   priceContainer: {
-    marginTop: 10,
+    marginTop: 20,
     marginLeft: 70,
   },
   row: {
     flexDirection: "row",
-    marginTop: 20,
   },
   buttonContainer: {
     flexDirection: "row",

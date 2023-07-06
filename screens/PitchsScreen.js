@@ -11,7 +11,7 @@ export default function PitchsScreen({ navigation }) {
   const pitches = useSelector((state) => state.pitch.pitches);
 
   const goBack = () => {
-    navigation.replace("FilterOptionScreen");
+    navigation.navigate("FilterOptionScreen");
   };
 
   const renderPitchItem = (pitch) => {
@@ -36,13 +36,36 @@ export default function PitchsScreen({ navigation }) {
                 <Text style={styles.ratingText}>{`${pitch.rating}/5`}</Text>
               </View>
             </View>
-            <Text>{`${pitch.type} - ${pitch.address}`}</Text>
-            <Text style={styles.priceStyle}>{`${pitch.price} per hour`}</Text>
+            <View style={styles.typeAdressBox}>
+              <Text
+                style={styles.addressStyle}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {pitch.address.length > 100
+                  ? `${pitch.address.substring(0, 100)}...`
+                  : pitch.address}
+              </Text>
+            </View>
+            <Text style={styles.priceStyle}>{`${pitch.price}$ per hour`}</Text>
           </Card.Content>
         </Card>
       </TouchableOpacity>
     );
   };
+
+  let pitchListContent;
+  if (pitches.length > 0) {
+    pitchListContent = (
+      <View style={styles.pitchList}>{pitches.map(renderPitchItem)}</View>
+    );
+  } else {
+    pitchListContent = (
+      <View style={styles.notFoundContainer}>
+        <Text style={styles.notFoundText}>Not found</Text>
+      </View>
+    );
+  }
 
   return (
     <Background>
@@ -52,7 +75,7 @@ export default function PitchsScreen({ navigation }) {
           <List.Subheader style={styles.pitchHeading}>
             Suitable Pitchs
           </List.Subheader>
-          <View style={styles.pitchList}>{pitches.map(renderPitchItem)}</View>
+          {pitchListContent}
         </List.Section>
       </ScrollView>
     </Background>
@@ -94,6 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     color: "#333",
+    flex: 1,
   },
   ratingIcon: {
     marginRight: 4,
@@ -117,5 +141,19 @@ const styles = StyleSheet.create({
   priceStyle: {
     marginTop: 12,
     fontSize: 16,
+  },
+  notFoundContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  notFoundText: {
+    fontSize: 20,
+    color: "red",
+    textAlign: "center",
+  },
+  typeAdressBox: {
+    display: "flex",
+    flexDirection: "row",
   },
 });

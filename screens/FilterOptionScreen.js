@@ -34,6 +34,8 @@ export default function FilterOptionScreen({ navigation }) {
 
     if (response.status == 200) {
       dispatch(PitchActions.setPitches(response.data));
+      dispatch(PitchActions.setSelectedPitchType(selectedPitchType));
+
       navigation.navigate("PitchsScreen");
     } else {
       console.log(`error`);

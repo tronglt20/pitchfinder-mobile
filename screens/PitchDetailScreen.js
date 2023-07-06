@@ -4,12 +4,13 @@ import { Button, Card } from "react-native-paper";
 import Background from "../components/Background";
 import BackButton from "../components/BackButton";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { max } from "moment";
 
 export default function PitchDetailScreen({ navigation, route }) {
   const { pitch } = route.params;
 
   const goBack = () => {
-    navigation.replace("PitchsScreen");
+    navigation.navigate("PitchsScreen");
   };
 
   const orderHandler = () => {
@@ -87,6 +88,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     padding: 20,
+    width: "100%",
   },
   headingBox: {
     borderBottomWidth: 2,
@@ -132,9 +134,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   orderBox: {
+    width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 20,
     marginBottom: 30,
     alignItems: "center",
   },
