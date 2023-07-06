@@ -4,7 +4,7 @@ import { Button, Card } from "react-native-paper";
 import Background from "../components/Background";
 import BackButton from "../components/BackButton";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { max } from "moment";
+import { OrderAPI } from "../services/OrderService";
 
 export default function PitchDetailScreen({ navigation, route }) {
   const { pitch } = route.params;
@@ -13,8 +13,11 @@ export default function PitchDetailScreen({ navigation, route }) {
     navigation.navigate("PitchsScreen");
   };
 
-  const orderHandler = () => {
-    navigation.navigate("OrderConfirmScreen", { pitch });
+  const orderHandler = async () => {
+    var response = await OrderAPI(pitch.storeId, pitch.price, "");
+    if (response.status == 200) {
+      navigation.navigate("OrderConfirmScreen", { pitch });
+    }
   };
 
   return (

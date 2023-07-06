@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Linking } from "react-native";
 import { Button, Card } from "react-native-paper";
 import Background from "../components/Background";
 import { useSelector } from "react-redux";
-
+import { ConfirmPaymentAPI } from "../services/OrderService";
 export default function OrderConfirmScreen({ navigation, route }) {
   const { pitch } = route.params;
   const selectedType = useSelector((state) => state.pitch.selectedType);
@@ -11,8 +11,9 @@ export default function OrderConfirmScreen({ navigation, route }) {
   const goBack = () => {
     navigation.navigate("PitchDetailScreen", { pitch });
   };
-  const handlePayment = () => {
-    console.log("payment pressed");
+  const handlePayment = async () => {
+    var response = await ConfirmPaymentAPI();
+    Linking.openURL(response.data.payUrl);
   };
 
   return (
