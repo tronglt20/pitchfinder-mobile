@@ -42,7 +42,9 @@ export default function SignupScreen({ navigation }) {
       passwordConfirm.value
     );
 
-    console.log(response);
+    if (response.status == 200) {
+      navigation.navigate("LoginScreen");
+    }
   };
 
   return (

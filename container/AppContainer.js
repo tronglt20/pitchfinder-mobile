@@ -1,8 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { CurrentUserAPI } from "../services/IAMService";
 import React, { useEffect, useState } from "react";
+import { AuthActions } from "../stores/AuthReducer";
 import StartScreen from "../screens/StartScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
@@ -10,22 +11,34 @@ import FilterOptionScreen from "../screens/FilterOptionScreen";
 import PitchsScreen from "../screens/PitchsScreen";
 import PitchDetailScreen from "../screens/PitchDetailScreen";
 import OrderConfirmScreen from "../screens/OrderConfirmScreen";
+import * as Linking from "expo-linking";
 
 const Stack = createNativeStackNavigator();
 
 export default function AppContainer() {
+  const dispatch = useDispatch();
   const [isAuth, setIsAuth] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
 
-  // const fetchData = async () => {
-  //   var response = await CurrentUserAPI();
-  //   if (response.status === 200) {
-  //     setIsAuth(true);
-  //   }
-  // };
+  useEffect(() => {
+    var request = CurrentUserAPI();
+    request
+      .then((response) => {
+        if (response.status == 200) {
+          setIsAuth(true);
+        } else {
+          setIsAuth(false);
+          dispatch(AuthActions.logout());
+        }
+      })
+      .finally(() => {
+        setShouldRender(true);
+      });
+  }, []);
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  if (!shouldRender) {
+    return null; // Render nothing while waiting for the state to be updated
+  }
 
   return (
     <NavigationContainer>
