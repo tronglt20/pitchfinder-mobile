@@ -11,7 +11,6 @@ import FilterOptionScreen from "../screens/FilterOptionScreen";
 import PitchsScreen from "../screens/PitchsScreen";
 import PitchDetailScreen from "../screens/PitchDetailScreen";
 import OrderConfirmScreen from "../screens/OrderConfirmScreen";
-import * as Linking from "expo-linking";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +18,6 @@ export default function AppContainer() {
   const dispatch = useDispatch();
   const [isAuth, setIsAuth] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
-
   useEffect(() => {
     var request = CurrentUserAPI();
     request

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Text } from "react-native-paper";
 import Background from "../components/Background";
 import Logo from "../components/Logo";
@@ -43,7 +43,12 @@ export default function SignupScreen({ navigation }) {
     );
 
     if (response.status == 200) {
-      navigation.navigate("LoginScreen");
+      Alert.alert("Success", "Account created successfully.", [
+        {
+          text: "OK",
+          onPress: () => navigation.navigate("LoginScreen"),
+        },
+      ]);
     }
   };
 
