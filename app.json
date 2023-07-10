@@ -2,7 +2,7 @@
   "expo": {
     "name": "pitchfinder-mobile",
     "slug": "pitchfinder-mobile",
-    "scheme": "myapp",
+    "scheme": "pitchfinder-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
