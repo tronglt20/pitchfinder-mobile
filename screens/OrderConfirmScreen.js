@@ -1,41 +1,23 @@
-import React, { useEffect, useState } from "react";
-import Background from "../components/Background";
-import { View, Text, StyleSheet } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, Linking } from "react-native";
 import { Button, Card } from "react-native-paper";
+import Background from "../components/Background";
 import { useSelector } from "react-redux";
 import { ConfirmPaymentAPI } from "../services/OrderService";
-import * as Linking from "expo-linking";
-
 export default function OrderConfirmScreen({ navigation, route }) {
   const { pitch } = route.params;
   const selectedType = useSelector((state) => state.pitch.selectedType);
-  const [data, setData] = useState(null);
 
   const goBack = () => {
     navigation.navigate("PitchDetailScreen", { pitch });
   };
   const handlePayment = async () => {
     var response = await ConfirmPaymentAPI();
-    //navigation.navigate("MomoPaymentScreen", { payUrl: response.data.payUrl });
-
     Linking.openURL(response.data.payUrl);
   };
 
-  const handleDeepLink = (event) => {
-    let data = Linking.parse(event.url);
-    setData(data);
-  };
-
-  useEffect(() => {
-    Linking.addEventListener("url", handleDeepLink);
-    return () => {
-      Linking.removeEventListener("url");
-    };
-  }, []);
-
   return (
     <Background>
-      <Text>{data ? JSON.stringify(data) : "App not open from deeplink"}</Text>
       <View style={styles.container}>
         <Text style={styles.headingText}>Order Confirmation</Text>
         <Text style={styles.headingDes}>
@@ -43,9 +25,7 @@ export default function OrderConfirmScreen({ navigation, route }) {
           make changes once your booking is confirmed!
         </Text>
         <Card style={styles.card}>
-          <Text style={styles.storeName}>{pitch.storeName}</Text>
-          <Text style={styles.pitchName}>({pitch.pitchName})</Text>
-
+          <Text style={styles.pitchName}>{pitch.name}</Text>
           <View style={styles.infoContainer}>
             <Text style={styles.infoTitle}>Address</Text>
             <Text style={styles.infoValue}>{pitch.address}</Text>
@@ -101,14 +81,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 3,
   },
-  storeName: {
-    textAlign: "center",
-    fontSize: 24,
-    fontWeight: "bold",
-  },
   pitchName: {
     textAlign: "center",
     fontSize: 24,
+    fontWeight: "bold",
     marginBottom: 20,
   },
   infoContainer: {

@@ -11,7 +11,6 @@ import FilterOptionScreen from "../screens/FilterOptionScreen";
 import PitchsScreen from "../screens/PitchsScreen";
 import PitchDetailScreen from "../screens/PitchDetailScreen";
 import OrderConfirmScreen from "../screens/OrderConfirmScreen";
-import MomoPaymentScreen from "../screens/MomoPaymentScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -60,7 +59,6 @@ export default function AppContainer() {
           name="OrderConfirmScreen"
           component={OrderConfirmScreen}
         />
-        <Stack.Screen name="MomoPaymentScreen" component={MomoPaymentScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

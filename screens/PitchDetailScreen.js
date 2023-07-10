@@ -17,7 +17,7 @@ export default function PitchDetailScreen({ navigation, route }) {
     var response = await OrderAPI(pitch.storeId, pitch.price, "");
     if (response.status == 200) {
       console.log(response.data);
-      navigation.navigate("OrderConfirmScreen", { pitch: response.data });
+      navigation.navigate("OrderConfirmScreen", { pitch });
     }
   };
 
