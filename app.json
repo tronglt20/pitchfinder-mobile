@@ -1,4 +1,6 @@
 {
+  "name": "pitchfinder-mobile",
+  "displayName": "pitchfinder-mobile",
   "expo": {
     "name": "pitchfinder-mobile",
     "slug": "pitchfinder-mobile",
