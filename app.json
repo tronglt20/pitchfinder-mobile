@@ -16,7 +16,6 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "associatedDomains": ["applinks:expo.dev"],
       "supportsTablet": true
     },
     "android": {
