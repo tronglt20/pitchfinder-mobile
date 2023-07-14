@@ -9,6 +9,7 @@ import * as Linking from "expo-linking";
 
 export default function OrderConfirmScreen({ navigation, route }) {
   const [data, setData] = useState(null);
+  const [showPaymentButton, setShowPaymentButton] = useState(true);
 
   useEffect(() => {
     Linking.addEventListener("url", handleDeeplink);
@@ -17,14 +18,26 @@ export default function OrderConfirmScreen({ navigation, route }) {
   function handleDeeplink(event) {
     let data = Linking.parse(event.url);
     setData(data);
-    //ConsumePaymentResultAPI(data.orderId, data.message, data.resultCode);
+
+    ConsumePaymentResultAPI(
+      data.queryParams.orderId,
+      data.queryParams.message,
+      data.queryParams.resultCode
+    );
+    if (data.queryParams.resultCode === "0") {
+      setShowPaymentButton(false);
+    }
   }
 
   const { pitch } = route.params;
   const selectedType = useSelector((state) => state.pitch.selectedType);
 
   const goBack = () => {
-    navigation.navigate("PitchDetailScreen", { pitch });
+    if (showPaymentButton) {
+      navigation.navigate("FilterOptionScreen");
+    } else {
+      navigation.navigate("PitchDetailScreen", { pitch });
+    }
   };
   const handlePayment = async () => {
     var response = await ConfirmPaymentAPI();
@@ -39,11 +52,9 @@ export default function OrderConfirmScreen({ navigation, route }) {
           Please confirm your booking information below. You will not be able to
           make changes once your booking is confirmed!
         </Text>
-        <Text>
-          {data
-            ? JSON.stringify(data.orderId, data.message, data.resultCode)
-            : "App not open from deeplink"}
-        </Text>
+        {data && data.queryParams && data.queryParams.resultCode === "0" && (
+          <Text style={styles.successText}>Order Successful!</Text>
+        )}
         <Card style={styles.card}>
           <Text style={styles.storeName}>{pitch.storeName}</Text>
           <Text style={styles.pitchName}>({pitch.pitchName})</Text>
@@ -71,13 +82,15 @@ export default function OrderConfirmScreen({ navigation, route }) {
           <Button mode="outlined" onPress={goBack} style={styles.button}>
             Back
           </Button>
-          <Button
-            mode="contained"
-            onPress={handlePayment}
-            style={styles.button}
-          >
-            Payment
-          </Button>
+          {showPaymentButton && (
+            <Button
+              mode="contained"
+              onPress={handlePayment}
+              style={styles.button}
+            >
+              Payment
+            </Button>
+          )}
         </View>
       </View>
     </Background>
@@ -140,5 +153,12 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     marginHorizontal: 5,
+  },
+  successText: {
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "green",
+    marginBottom: 10,
   },
 });
