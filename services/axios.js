@@ -5,9 +5,20 @@ const instance = axios.create({
   baseURL: "http://192.168.1.26:8090/api",
 });
 
-var response = AsyncStorage.getItem("accessToken");
-response.then((token) => {
-  instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-});
+// Add a request interceptor
+instance.interceptors.request.use(
+  async (config) => {
+    // Get the accessToken from AsyncStorage
+    const token = await AsyncStorage.getItem("accessToken");
+    // If the token is available, set it in the Authorization header
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default instance;

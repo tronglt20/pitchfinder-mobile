@@ -52,8 +52,16 @@ export default function OrderConfirmScreen({ navigation, route }) {
           Please confirm your booking information below. You will not be able to
           make changes once your booking is confirmed!
         </Text>
-        {data && data.queryParams && data.queryParams.resultCode === "0" && (
-          <Text style={styles.successText}>Order Successful!</Text>
+        {data && data.queryParams && (
+          <>
+            {data.queryParams.resultCode === "0" ? (
+              <Text style={styles.successText}>Order Successful!</Text>
+            ) : (
+              <Text style={styles.failureText}>
+                Order Failed. Please try again or contact customer support.
+              </Text>
+            )}
+          </>
         )}
         <Card style={styles.card}>
           <Text style={styles.storeName}>{pitch.storeName}</Text>
@@ -159,6 +167,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "green",
+    marginBottom: 10,
+  },
+  failureText: {
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "red",
     marginBottom: 10,
   },
 });
