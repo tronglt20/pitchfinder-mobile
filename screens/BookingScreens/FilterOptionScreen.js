@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
     width: "100%",
     flex: 1,
     justifyContent: "flex-end",
-    marginBottom: 36,
-    paddingHorizontal: 16,
+    marginBottom: 14,
+    paddingHorizontal: 50,
   },
   searchButton: {
     borderRadius: 24,

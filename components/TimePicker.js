@@ -76,9 +76,6 @@ export default function TimePicker({ onSelect }) {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    borderBottomWidth: 2,
-    borderBottomColor: "#EDF0F7",
-    paddingBottom: 20,
   },
   heading: {
     marginTop: 20,
