@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { Button, Card } from "react-native-paper";
-import Background from "../components/Background";
-import BackButton from "../components/BackButton";
+import Background from "../../components/Background";
+import BackButton from "../../components/BackButton";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { OrderAPI } from "../services/OrderService";
+import { OrderAPI } from "../../services/OrderService";
 
 export default function PitchDetailScreen({ navigation, route }) {
   const { pitch } = route.params;
@@ -24,7 +24,7 @@ export default function PitchDetailScreen({ navigation, route }) {
     <Background>
       <BackButton goBack={goBack} />
       <Image
-        source={require("../assets/pitchImage.png")}
+        source={require("../../assets/pitchImage.png")}
         style={styles.image}
       />
       <View style={styles.contentContainer}>

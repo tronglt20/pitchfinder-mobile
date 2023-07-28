@@ -1,10 +1,10 @@
 import React from "react";
-import Background from "../components/Background";
+import Background from "../../components/Background";
 import { Text, List, Card, Title } from "react-native-paper";
 import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 
-import BackButton from "../components/BackButton";
+import BackButton from "../../components/BackButton";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function PitchsScreen({ navigation }) {

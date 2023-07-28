@@ -4,13 +4,12 @@ import { useDispatch } from "react-redux";
 import { CurrentUserAPI } from "../services/IAMService";
 import React, { useEffect, useState } from "react";
 import { AuthActions } from "../stores/AuthReducer";
+import MenuBar from "../components/MenuBar";
 import StartScreen from "../screens/StartScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
-import FilterOptionScreen from "../screens/FilterOptionScreen";
-import PitchsScreen from "../screens/PitchsScreen";
-import PitchDetailScreen from "../screens/PitchDetailScreen";
-import OrderConfirmScreen from "../screens/OrderConfirmScreen";
+import AccountContainer from "./AccountContainer";
+import BookingContainer from "./BookingContainer";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,7 +40,7 @@ export default function AppContainer() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={isAuth ? "FilterOptionScreen" : "StartScreen"}
+        initialRouteName={isAuth ? "BookingContainer" : "StartScreen"}
         screenOptions={{
           headerShown: false,
         }}
@@ -49,17 +48,10 @@ export default function AppContainer() {
         <Stack.Screen name="StartScreen" component={StartScreen} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} />
-        <Stack.Screen
-          name="FilterOptionScreen"
-          component={FilterOptionScreen}
-        />
-        <Stack.Screen name="PitchsScreen" component={PitchsScreen} />
-        <Stack.Screen name="PitchDetailScreen" component={PitchDetailScreen} />
-        <Stack.Screen
-          name="OrderConfirmScreen"
-          component={OrderConfirmScreen}
-        />
+        <Stack.Screen name="BookingContainer" component={BookingContainer} />
+        <Stack.Screen name="AccountContainer" component={AccountContainer} />
       </Stack.Navigator>
+      {isAuth && <MenuBar />}
     </NavigationContainer>
   );
 }

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Background from "../components/Background";
-import CalenderPicker from "../components/CalenderPicker";
-import TimePicker from "../components/TimePicker";
-import PitchTypePicker from "../components/PitchTypePicker";
+import Background from "../../components/Background";
+import CalenderPicker from "../../components/CalenderPicker";
+import TimePicker from "../../components/TimePicker";
+import PitchTypePicker from "../../components/PitchTypePicker";
 import { useDispatch } from "react-redux";
 import { Button } from "react-native-paper";
 import { View, StyleSheet } from "react-native";
-import { FilterStoresAPI } from "../services/PitchService";
-import { PitchActions } from "../stores/PitchReducer";
+import { FilterStoresAPI } from "../../services/PitchService";
+import { PitchActions } from "../../stores/PitchReducer";
 
 export default function FilterOptionScreen({ navigation }) {
   const dispatch = useDispatch();

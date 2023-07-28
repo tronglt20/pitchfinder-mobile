@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, Card } from "react-native-paper";
-import Background from "../components/Background";
+import Background from "../../components/Background";
 import { useSelector } from "react-redux";
-import { ConfirmPaymentAPI } from "../services/OrderService";
-import { ConsumePaymentResultAPI } from "../services/PaymentService";
+import { ConfirmPaymentAPI } from "../../services/OrderService";
+import { ConsumePaymentResultAPI } from "../../services/PaymentService";
 import * as Linking from "expo-linking";
 
 export default function OrderConfirmScreen({ navigation, route }) {
