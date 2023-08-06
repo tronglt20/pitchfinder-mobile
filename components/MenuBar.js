@@ -1,26 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function MenuBar() {
   const navigation = useNavigation();
+  const [selectedItem, setSelectedItem] = useState("BookingContainer"); // Default selected item
+
+  const handleMenuItemPress = (itemName) => {
+    setSelectedItem(itemName);
+    navigation.navigate(itemName);
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        style={styles.menuItem}
-        onPress={() => {
-          navigation.navigate("BookingContainer");
-        }}
+        style={[
+          styles.menuItem,
+          selectedItem === "BookingContainer" && styles.selectedItem,
+        ]}
+        onPress={() => handleMenuItemPress("BookingContainer")}
       >
-        <Text style={styles.menuText}>Booking</Text>
+        <Text
+          style={[
+            styles.menuText,
+            selectedItem === "BookingContainer" && styles.selectedText,
+          ]}
+        >
+          Booking
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.menuItem}
-        onPress={() => {
-          navigation.navigate("AccountContainer");
-        }}
+        style={[
+          styles.menuItem,
+          selectedItem === "AccountContainer" && styles.selectedItem,
+        ]}
+        onPress={() => handleMenuItemPress("AccountContainer")}
       >
-        <Text style={styles.menuText}>Account</Text>
+        <Text
+          style={[
+            styles.menuText,
+            selectedItem === "AccountContainer" && styles.selectedText,
+          ]}
+        >
+          Account
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -46,5 +69,11 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 16,
     color: "black",
+  },
+  selectedItem: {
+    backgroundColor: "#e1e1e1",
+  },
+  selectedText: {
+    color: "blue",
   },
 });

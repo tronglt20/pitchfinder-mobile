@@ -20,11 +20,6 @@ export default function FilterOptionScreen({ navigation }) {
   const [selectedPitchType, setSelectedPitchType] = useState(null);
 
   const handleSearch = async () => {
-    // console.log("Selected Pitch Type:", selectedPitchType);
-    // console.log("Start Time:", `${selectedTime.startTime}:00:00`);
-    // console.log("End Time:", `${selectedTime.endTime}:00:00`);
-    // console.log("Selected Date:", selectedDate);
-
     var response = await FilterStoresAPI(
       selectedPitchType,
       `${selectedTime.startTime}:00:00`,
