@@ -30,6 +30,8 @@ export default function FilterOptionScreen({ navigation }) {
     if (response.status == 200) {
       dispatch(PitchActions.setPitches(response.data));
       dispatch(PitchActions.setSelectedPitchType(selectedPitchType));
+      dispatch(PitchActions.setSelectedDate(selectedDate));
+      dispatch(PitchActions.setSelectedTime(selectedTime));
 
       navigation.navigate("PitchsScreen");
     } else {

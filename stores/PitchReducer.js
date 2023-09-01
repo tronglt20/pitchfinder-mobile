@@ -7,6 +7,13 @@ const pitchSlice = createSlice({
   initialState: {
     selectedType: "",
     pitches: {},
+    filterState: {
+      selectedDate: null,
+      selectedTime: {
+        startTime: null,
+        endTime: null,
+      },
+    },
   },
   reducers: {
     setPitches(state, actions) {
@@ -14,6 +21,12 @@ const pitchSlice = createSlice({
     },
     setSelectedPitchType(state, actions) {
       state.selectedType = dict[actions.payload];
+    },
+    setSelectedDate(state, actions) {
+      state.filterState.selectedDate = actions.payload;
+    },
+    setSelectedTime(state, actions) {
+      state.filterState.selectedTime = actions.payload;
     },
   },
 });

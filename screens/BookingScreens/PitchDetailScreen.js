@@ -5,8 +5,10 @@ import Background from "../../components/Background";
 import BackButton from "../../components/BackButton";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { OrderAPI } from "../../services/OrderService";
+import { useSelector } from "react-redux";
 
 export default function PitchDetailScreen({ navigation, route }) {
+  const filterState = useSelector((state) => state.pitch.filterState);
   const { pitch } = route.params;
 
   const goBack = () => {
@@ -19,6 +21,23 @@ export default function PitchDetailScreen({ navigation, route }) {
       navigation.navigate("OrderConfirmScreen", { pitch: response.data });
     }
   };
+
+  function formatDate(selectedDate) {
+    const date = new Date(selectedDate);
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
+  }
+
+  function formatSelectedTime(selectedTime) {
+    const { startTime, endTime } = selectedTime;
+    return `${String(startTime).padStart(2, "0")}:00 - ${String(
+      endTime
+    ).padStart(2, "0")}:00`;
+  }
 
   return (
     <Background>
@@ -71,7 +90,9 @@ export default function PitchDetailScreen({ navigation, route }) {
             <Text style={styles.price}>{`$${pitch.price}`} </Text>
             <Text style={styles.priceText}>per hour</Text>
           </Text>
-          <Text style={styles.orderInfo}>{`14:00 - 15:00 | 16/05/2022`}</Text>
+          <Text style={styles.orderInfo}>{`${formatSelectedTime(
+            filterState.selectedTime
+          )} | ${formatDate(filterState.selectedDate)}`}</Text>
         </View>
         <Button mode="contained" onPress={orderHandler}>
           Order
