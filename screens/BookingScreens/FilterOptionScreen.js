@@ -5,7 +5,7 @@ import TimePicker from "../../components/TimePicker";
 import PitchTypePicker from "../../components/PitchTypePicker";
 import { useDispatch } from "react-redux";
 import { Button } from "react-native-paper";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { FilterStoresAPI } from "../../services/PitchService";
 import { PitchActions } from "../../stores/PitchReducer";
 
@@ -19,7 +19,30 @@ export default function FilterOptionScreen({ navigation }) {
   });
   const [selectedPitchType, setSelectedPitchType] = useState(null);
 
+  const validateForm = () => {
+    let missingFields = [];
+
+    if (!selectedPitchType) {
+      missingFields.push("Pitch Type");
+    }
+    if (!selectedDate) {
+      missingFields.push("Date");
+    }
+
+    return missingFields;
+  };
+
   const handleSearch = async () => {
+    const missingFields = validateForm();
+
+    if (missingFields.length > 0) {
+      const missingFieldsMessage = `Please fill in the following field(s): ${missingFields.join(
+        ", "
+      )}`;
+      Alert.alert(missingFieldsMessage);
+      return;
+    }
+
     var response = await FilterStoresAPI(
       selectedPitchType,
       `${selectedTime.startTime}:00:00`,
@@ -60,7 +83,6 @@ export default function FilterOptionScreen({ navigation }) {
 const styles = StyleSheet.create({
   searchButtonContainer: {
     width: "100%",
-    flex: 1,
     justifyContent: "flex-end",
     marginBottom: 14,
     paddingHorizontal: 50,
