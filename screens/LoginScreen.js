@@ -27,12 +27,10 @@ export default function LoginScreen({ navigation }) {
     }
     var response = await SigninAPI(email.value, password.value);
     if ((response.status = 200)) {
-      await AsyncStorage.setItem("accessToken", response.data.accessToken);
+      //await AsyncStorage.setItem("accessToken", response.data.accessToken);
       dispatch(AuthActions.login(response));
 
-      navigation.reset({
-        index: 0,
-      });
+      navigation.goBack();
     }
   };
 
