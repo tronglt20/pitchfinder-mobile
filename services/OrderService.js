@@ -12,4 +12,8 @@ const ConfirmPaymentAPI = () => {
   return axios.post("/order/customer/confirm");
 };
 
-export { OrderAPI, ConfirmPaymentAPI };
+const GetOrdersAPI = () => {
+  return axios.get("/order/customer");
+};
+
+export { OrderAPI, ConfirmPaymentAPI, GetOrdersAPI };

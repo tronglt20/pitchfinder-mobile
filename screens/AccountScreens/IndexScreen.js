@@ -1,36 +1,45 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
-import OrderHistoryScreen from "./OrderHistoryScreen";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, Text, Image } from "react-native";
+import OrderHistory from "../../components/OrderHistory";
 import Background from "../../components/Background";
-const IndexScreen = () => {
-  const orderHistoryData = [
-    {
-      id: "1",
-      orderDate: "2023-07-28",
-      orderTotal: "$50",
-      status: "Delivered",
-    },
-    {
-      id: "2",
-      orderDate: "2023-07-25",
-      orderTotal: "$30",
-      status: "Pending",
-    },
-  ];
+import { useSelector } from "react-redux";
+import { GetOrdersAPI } from "../../services/OrderService";
 
-  const accountInfo = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    avatarUrl: "https://example.com/avatar.jpg", // Replace with the actual URL of the user's avatar
-  };
+const IndexScreen = () => {
+  const userData = useSelector((state) => state.auth.user);
+  const [orderHistoryData, setOrderHistoryData] = useState(null);
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    var request = GetOrdersAPI();
+    request
+      .then((response) => {
+        if (response.status == 200) {
+          setOrderHistoryData(response.data);
+        } else {
+          setIsAuth(false);
+        }
+      })
+      .finally(() => {
+        setShouldRender(true);
+      });
+  }, []);
+
+  if (!shouldRender) {
+    return null;
+  }
 
   return (
     <Background>
       <View style={styles.container}>
-        {/* User Avatar */}
+        {/* User Information */}
+        <View style={styles.userInfo}>
+          <Text style={styles.userName}>{userData.name.split("@")[0]}</Text>
+          <Text style={styles.userEmail}>{userData.email}</Text>
+        </View>
 
         {/* Order History */}
-        <OrderHistoryScreen orderHistoryData={orderHistoryData} />
+        <OrderHistory orderHistoryData={orderHistoryData} />
       </View>
     </Background>
   );
@@ -39,6 +48,31 @@ const IndexScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  avatarContainer: {
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 100,
+    overflow: "hidden",
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  userInfo: {
+    alignItems: "center",
+    marginTop: 10,
+  },
+  userName: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  userEmail: {
+    fontSize: 16,
+    color: "gray",
   },
 });
 

@@ -27,8 +27,8 @@ export default function LoginScreen({ navigation }) {
     }
     var response = await SigninAPI(email.value, password.value);
     if ((response.status = 200)) {
-      //await AsyncStorage.setItem("accessToken", response.data.accessToken);
-      dispatch(AuthActions.login(response));
+      await AsyncStorage.setItem("accessToken", response.data.accessToken);
+      dispatch(AuthActions.login(response.data));
 
       navigation.goBack();
     }

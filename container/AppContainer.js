@@ -23,6 +23,7 @@ export default function AppContainer() {
       .then((response) => {
         if (response.status == 200) {
           setIsAuth(true);
+          dispatch(AuthActions.setCurrentUser(response));
         } else {
           setIsAuth(false);
           dispatch(AuthActions.logout());
@@ -34,7 +35,7 @@ export default function AppContainer() {
   }, []);
 
   if (!shouldRender) {
-    return null; // Render nothing while waiting for the state to be updated
+    return null;
   }
 
   return (

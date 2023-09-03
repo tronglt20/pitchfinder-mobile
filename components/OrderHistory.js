@@ -1,9 +1,10 @@
 import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 
-const OrderHistoryScreen = ({ orderHistoryData }) => {
+const OrderHistory = ({ orderHistoryData }) => {
+  console.log(orderHistoryData);
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.sectionTitle}>Order History</Text>
       <FlatList
         data={orderHistoryData}
@@ -21,8 +22,11 @@ const OrderHistoryScreen = ({ orderHistoryData }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 20,
+  },
   sectionTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
   },
@@ -35,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OrderHistoryScreen;
+export default OrderHistory;
