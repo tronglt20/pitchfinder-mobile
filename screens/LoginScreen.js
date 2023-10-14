@@ -15,80 +15,85 @@ import { EmailValidator } from "../helpers/EmailValidator";
 import { theme } from "../core/theme";
 
 export default function LoginScreen({ navigation }) {
-  const dispatch = useDispatch();
-  const [email, setEmail] = useState({ value: "", error: "" });
-  const [password, setPassword] = useState({ value: "", error: "" });
+	const dispatch = useDispatch();
+	const [email, setEmail] = useState({ value: "", error: "" });
+	const [password, setPassword] = useState({ value: "", error: "" });
 
-  const onLoginPressed = async () => {
-    const emailError = EmailValidator(email.value);
-    if (emailError) {
-      setEmail({ ...email, error: emailError });
-      return;
-    }
-    var response = await SigninAPI(email.value, password.value);
-    if ((response.status = 200)) {
-      await AsyncStorage.setItem("accessToken", response.data.accessToken);
-      dispatch(AuthActions.login(response.data));
+	const onLoginPressed = async () => {
+		const emailError = EmailValidator(email.value);
+		if (emailError) {
+			setEmail({ ...email, error: emailError });
+			return;
+		}
+		try {
+			const response = await SigninAPI(email.value, password.value);
+			if (response && response.data && response.data.accessToken) {
+				await AsyncStorage.setItem("accessToken", response.data.accessToken);
+				dispatch(AuthActions.login(response.data));
+				navigation.navigate("BookingContainer");
+			} else {
+				console.error("API call returned an unexpected response:", response);
+			}
+		} catch (error) {
+			console.error("API call failed:", error);
+		}
+	};
 
-      navigation.goBack();
-    }
-  };
-
-  return (
-    <Background>
-      <BackButton goBack={navigation.goBack} />
-      <Logo />
-      <Header>Welcome back.</Header>
-      <TextInput
-        label="Email"
-        returnKeyType="next"
-        value={email.value}
-        onChangeText={(text) => setEmail({ value: text, error: "" })}
-        error={!!email.error}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-      />
-      <TextInput
-        label="Password"
-        returnKeyType="done"
-        value={password.value}
-        onChangeText={(text) => setPassword({ value: text, error: "" })}
-        error={!!password.error}
-        errorText={password.error}
-        secureTextEntry
-      />
-      <Button mode="contained" onPress={onLoginPressed}>
-        Login
-      </Button>
-      <View style={styles.row}>
-        <Text>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace("SignupScreen")}>
-          <Text style={styles.link}>Sign up</Text>
-        </TouchableOpacity>
-      </View>
-    </Background>
-  );
+	return (
+		<Background>
+			<BackButton goBack={navigation.goBack} />
+			<Logo />
+			<Header>Welcome back.</Header>
+			<TextInput
+				label="Email"
+				returnKeyType="next"
+				value={email.value}
+				onChangeText={(text) => setEmail({ value: text, error: "" })}
+				error={!!email.error}
+				errorText={email.error}
+				autoCapitalize="none"
+				autoCompleteType="email"
+				textContentType="emailAddress"
+				keyboardType="email-address"
+			/>
+			<TextInput
+				label="Password"
+				returnKeyType="done"
+				value={password.value}
+				onChangeText={(text) => setPassword({ value: text, error: "" })}
+				error={!!password.error}
+				errorText={password.error}
+				secureTextEntry
+			/>
+			<Button mode="contained" onPress={onLoginPressed}>
+				Login
+			</Button>
+			<View style={styles.row}>
+				<Text>Don’t have an account? </Text>
+				<TouchableOpacity onPress={() => navigation.replace("SignupScreen")}>
+					<Text style={styles.link}>Sign up</Text>
+				</TouchableOpacity>
+			</View>
+		</Background>
+	);
 }
 
 const styles = StyleSheet.create({
-  forgotPassword: {
-    width: "100%",
-    alignItems: "flex-end",
-    marginBottom: 24,
-  },
-  row: {
-    flexDirection: "row",
-    marginTop: 4,
-  },
-  forgot: {
-    fontSize: 13,
-    color: theme.colors.secondary,
-  },
-  link: {
-    fontWeight: "bold",
-    color: theme.colors.primary,
-  },
+	forgotPassword: {
+		width: "100%",
+		alignItems: "flex-end",
+		marginBottom: 24,
+	},
+	row: {
+		flexDirection: "row",
+		marginTop: 4,
+	},
+	forgot: {
+		fontSize: 13,
+		color: theme.colors.secondary,
+	},
+	link: {
+		fontWeight: "bold",
+		color: theme.colors.primary,
+	},
 });
