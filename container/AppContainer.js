@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CurrentUserAPI } from "../services/IAMService";
 import React, { useEffect, useState } from "react";
 import { AuthActions } from "../stores/AuthReducer";
-import MenuBar from "../components/MenuBar";
+import { MenuBar } from "../components/MenuBar";
 import StartScreen from "../screens/StartScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";

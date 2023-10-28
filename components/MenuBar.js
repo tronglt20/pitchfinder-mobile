@@ -1,79 +1,60 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+// import { Ticket } from "heroicons";
 
-export default function MenuBar() {
-  const navigation = useNavigation();
-  const [selectedItem, setSelectedItem] = useState("BookingContainer"); // Default selected item
+export const MenuBar = () => {
+	const navigation = useNavigation();
+	const [selectedItem, setSelectedItem] = useState("BookingContainer");
 
-  const handleMenuItemPress = (itemName) => {
-    setSelectedItem(itemName);
-    navigation.navigate(itemName);
-  };
+	const handleMenuItemPress = (itemName) => {
+		setSelectedItem(itemName);
+		navigation.navigate(itemName);
+	};
 
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={[
-          styles.menuItem,
-          selectedItem === "BookingContainer" && styles.selectedItem,
-        ]}
-        onPress={() => handleMenuItemPress("BookingContainer")}
-      >
-        <Text
-          style={[
-            styles.menuText,
-            selectedItem === "BookingContainer" && styles.selectedText,
-          ]}
-        >
-          Booking
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[
-          styles.menuItem,
-          selectedItem === "AccountContainer" && styles.selectedItem,
-        ]}
-        onPress={() => handleMenuItemPress("AccountContainer")}
-      >
-        <Text
-          style={[
-            styles.menuText,
-            selectedItem === "AccountContainer" && styles.selectedText,
-          ]}
-        >
-          Account
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    height: 60,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    borderTopWidth: 1,
-    borderTopColor: "gray",
-    backgroundColor: "white",
-    paddingBottom: 20,
-  },
-  menuItem: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 10,
-  },
-  menuText: {
-    fontSize: 16,
-    color: "black",
-  },
-  selectedItem: {
-    backgroundColor: "#e1e1e1",
-  },
-  selectedText: {
-    color: "blue",
-  },
-});
+	return (
+		<View className="flex bg-white flex-row h-16 shadow-2xl">
+			<TouchableOpacity
+				className={`flex-1 items-center justify-center bg-white shadow-2xl  ${
+					selectedItem === "BookingContainer" ? "bg-secondary" : ""
+				}`}
+				onPress={() => handleMenuItemPress("BookingContainer")}
+			>
+				<View
+					className={`${
+						selectedItem === "BookingContainer" ? "text-primary" : ""
+					}`}
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						strokeWidth={1.5}
+						stroke="currentColor"
+						className="w-6 h-6"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
+						/>
+					</svg>
+				</View>
+			</TouchableOpacity>
+			<TouchableOpacity
+				className={`flex-1 items-center justify-center bg-white h-16 shadow-2xl ${
+					selectedItem === "AccountContainer" ? "bg-secondary" : ""
+				}`}
+				onPress={() => handleMenuItemPress("AccountContainer")}
+			>
+				<Text
+					className={`${
+						selectedItem === "AccountContainer" ? "text-primary" : ""
+					}`}
+				>
+					Account
+				</Text>
+			</TouchableOpacity>
+		</View>
+	);
+};
