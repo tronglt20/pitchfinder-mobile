@@ -4,95 +4,82 @@ import CalenderPicker from "../../components/CalenderPicker";
 import TimePicker from "../../components/TimePicker";
 import PitchTypePicker from "../../components/PitchTypePicker";
 import { useDispatch } from "react-redux";
-import { Button } from "react-native-paper";
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet, Alert, Text, TouchableOpacity } from "react-native";
 import { FilterStoresAPI } from "../../services/PitchService";
 import { PitchActions } from "../../stores/PitchReducer";
+import { MagnifyingGlassIcon as SearchIconOutline } from "react-native-heroicons/outline";
+import { theme } from "../../core/theme";
 
 export default function FilterOptionScreen({ navigation }) {
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState({
-    startTime: null,
-    endTime: null,
-  });
-  const [selectedPitchType, setSelectedPitchType] = useState(null);
+	const [selectedDate, setSelectedDate] = useState(null);
+	const [selectedTime, setSelectedTime] = useState({
+		startTime: null,
+		endTime: null,
+	});
+	const [selectedPitchType, setSelectedPitchType] = useState(null);
 
-  const validateForm = () => {
-    let missingFields = [];
+	const validateForm = () => {
+		let missingFields = [];
 
-    if (!selectedPitchType) {
-      missingFields.push("Pitch Type");
-    }
-    if (!selectedDate) {
-      missingFields.push("Date");
-    }
+		if (!selectedPitchType) {
+			missingFields.push("Pitch Type");
+		}
+		if (!selectedDate) {
+			missingFields.push("Date");
+		}
 
-    return missingFields;
-  };
+		return missingFields;
+	};
 
-  const handleSearch = async () => {
-    const missingFields = validateForm();
+	const handleSearch = async () => {
+		const missingFields = validateForm();
 
-    if (missingFields.length > 0) {
-      const missingFieldsMessage = `Please fill in the following field(s): ${missingFields.join(
-        ", "
-      )}`;
-      Alert.alert(missingFieldsMessage);
-      return;
-    }
+		if (missingFields.length > 0) {
+			const missingFieldsMessage = `Please fill in the following field(s): ${missingFields.join(
+				", "
+			)}`;
+			Alert.alert(missingFieldsMessage);
+			return;
+		}
 
-    var response = await FilterStoresAPI(
-      selectedPitchType,
-      `${selectedTime.startTime}:00:00`,
-      `${selectedTime.endTime}:00:00`,
-      selectedDate
-    );
+		var response = await FilterStoresAPI(
+			selectedPitchType,
+			`${selectedTime.startTime}:00:00`,
+			`${selectedTime.endTime}:00:00`,
+			selectedDate
+		);
 
-    if (response.status == 200) {
-      dispatch(PitchActions.setPitches(response.data));
-      dispatch(PitchActions.setSelectedPitchType(selectedPitchType));
-      dispatch(PitchActions.setSelectedDate(selectedDate));
-      dispatch(PitchActions.setSelectedTime(selectedTime));
+		if (response.status == 200) {
+			dispatch(PitchActions.setPitches(response.data));
+			dispatch(PitchActions.setSelectedPitchType(selectedPitchType));
+			dispatch(PitchActions.setSelectedDate(selectedDate));
+			dispatch(PitchActions.setSelectedTime(selectedTime));
 
-      navigation.navigate("PitchsScreen");
-    } else {
-      console.log(`error`);
-    }
-  };
-  return (
-    <Background>
-      <CalenderPicker onSelect={setSelectedDate} />
-      <PitchTypePicker onSelect={setSelectedPitchType} />
-      <TimePicker onSelect={setSelectedTime} />
-      <View style={styles.searchButtonContainer}>
-        <Button
-          mode="contained"
-          onPress={handleSearch}
-          style={styles.searchButton}
-          labelStyle={styles.searchButtonLabel}
-        >
-          Search
-        </Button>
-      </View>
-    </Background>
-  );
+			navigation.navigate("PitchsScreen");
+		} else {
+			console.log(`error`);
+		}
+	};
+	return (
+		<Background>
+			<View className="h-full">
+				<Text className="font-bold text-2xl text-center text-primary pb-2">
+					Pitch Finder
+				</Text>
+				<CalenderPicker onSelect={setSelectedDate} />
+				<PitchTypePicker onSelect={setSelectedPitchType} />
+				<TimePicker onSelect={setSelectedTime} />
+				<View className="w-full mt-2">
+					<TouchableOpacity
+						onPress={handleSearch}
+						className="flex self-end items-center w-12 p-2 rounded-full bg-primary shadow-sm "
+					>
+						<SearchIconOutline size="30" color="#ffffff" />
+					</TouchableOpacity>
+				</View>
+			</View>
+		</Background>
+	);
 }
-
-const styles = StyleSheet.create({
-  searchButtonContainer: {
-    width: "100%",
-    justifyContent: "flex-end",
-    marginBottom: 14,
-    paddingHorizontal: 50,
-  },
-  searchButton: {
-    borderRadius: 24,
-  },
-  searchButtonLabel: {
-    fontSize: 16,
-    fontWeight: "bold",
-    paddingVertical: 6,
-  },
-});
