@@ -1,25 +1,15 @@
 import React from "react";
-import { TouchableOpacity, Image, StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native";
+import { ArrowLeftCircleIcon as ArrowIconOutline } from "react-native-heroicons/outline";
+import { theme } from "../core/theme";
 
 export default function BackButton({ goBack }) {
-  return (
-    <TouchableOpacity onPress={goBack} style={styles.container}>
-      <Image
-        style={styles.image}
-        source={require("../assets/arrow_back.png")}
-      />
-    </TouchableOpacity>
-  );
+	return (
+		<TouchableOpacity
+			onPress={goBack}
+			className="fixed w-fit z-10 top-2 left-2"
+		>
+			<ArrowIconOutline size="40" color={theme.colors.secondary} />
+		</TouchableOpacity>
+	);
 }
-
-const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    top: 10,
-    left: 4,
-  },
-  image: {
-    width: 24,
-    height: 24,
-  },
-});

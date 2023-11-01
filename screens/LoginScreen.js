@@ -41,8 +41,8 @@ export default function LoginScreen({ navigation }) {
 
 	return (
 		<Background>
+			<BackButton goBack={navigation.goBack} />
 			<View className="flex w-full h-full items-center self-center justify-center">
-				<BackButton goBack={navigation.goBack} />
 				<Logo />
 				<Header>Welcome back.</Header>
 				<TextInput
