@@ -6,7 +6,7 @@ const SignupAPI = (email, password, passwordConfirm) => {
 	formData.append("email", email);
 	formData.append("password", password);
 	formData.append("passwordConfirm", passwordConfirm);
-	formData.append("isCustomer", "true");
+	formData.append("isCustomer", true);
 
 	return axios.post("/iam/authentication/sign-up", formData, {
 		headers: {

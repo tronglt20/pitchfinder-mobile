@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, TouchableOpacity, Alert } from "react-native";
 import { Text } from "react-native-paper";
 import Background from "../components/Background";
 import Logo from "../components/Logo";
@@ -10,7 +10,6 @@ import BackButton from "../components/BackButton";
 import { EmailValidator } from "../helpers/EmailValidator";
 import { PasswordValidator } from "../helpers/PasswordValidator";
 import { PasswordConfirmValidator } from "../helpers/PasswordConfirmValidator";
-import { theme } from "../core/theme";
 import { SignupAPI } from "../services/IAMService";
 
 export default function SignupScreen({ navigation }) {
@@ -36,17 +35,28 @@ export default function SignupScreen({ navigation }) {
 			return;
 		}
 
-		var response = await SignupAPI(
-			email.value,
-			password.value,
-			passwordConfirm.value
-		);
+		try {
+			var response = await SignupAPI(
+				email.value,
+				password.value,
+				passwordConfirm.value
+			);
 
-		if (response.status == 200) {
-			Alert.alert("Success", "Account created successfully.", [
+			console.log(response);
+
+			if (response.status == 200) {
+				Alert.alert("Success", "Account created successfully.", [
+					{
+						text: "OK",
+						onPress: () => navigation.navigate("LoginScreen"),
+					},
+				]);
+			}
+		} catch {
+			Alert.alert("Error", "Something went wrong. Please try again.", [
 				{
 					text: "OK",
-					onPress: () => navigation.navigate("LoginScreen"),
+					onPress: () => navigation.navigate("SignupScreen"),
 				},
 			]);
 		}
@@ -54,8 +64,8 @@ export default function SignupScreen({ navigation }) {
 
 	return (
 		<Background>
-			<View className="flex h-full w-full items-center self-center justify-center">
-				<BackButton goBack={navigation.goBack} />
+			<BackButton goBack={navigation.goBack} />
+			<View className="flex h-screen w-full items-center self-center justify-center">
 				<Logo />
 				<Header>Create Account</Header>
 				<TextInput

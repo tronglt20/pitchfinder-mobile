@@ -1,41 +1,27 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import CalendarPicker from "react-native-calendar-picker";
 import { theme } from "../core/theme";
 
 export default function CalendarPickerComponent({ onSelect }) {
-  const minDate = new Date(); // Today
+	const minDate = new Date();
 
-  const onDateChange = (date) => {
-    onSelect(date);
-  };
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Which date are you looking for?</Text>
-      <View style={styles.calendar}>
-        <CalendarPicker
-          minDate={minDate}
-          onDateChange={onDateChange}
-          selectedDayColor={theme.colors.primary}
-          selectedDayTextColor="#FFFFFF"
-        />
-      </View>
-    </View>
-  );
+	return (
+		<View className="w-full rounded-xl shadow-sm">
+			<Text className="font-bold pl-2 text-lg text-primary">
+				Which date are you looking for?
+			</Text>
+			<View className="h-[360px]">
+				<CalendarPicker
+					minDate={minDate}
+					todayTextStyle={{ color: "white" }}
+					defaultColor={theme.colors.primary}
+					todayBackgroundColor={theme.colors.backdrop}
+					onDateChange={(date) => onSelect(date)}
+					selectedDayColor={theme.colors.secondary}
+					selectedDayTextColor={theme.colors.primary}
+				/>
+			</View>
+		</View>
+	);
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    borderBottomWidth: 2,
-    borderBottomColor: "#EDF0F7",
-  },
-  heading: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  calendar: {
-    marginVertical: 20,
-  },
-});

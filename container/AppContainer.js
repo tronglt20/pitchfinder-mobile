@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { CurrentUserAPI } from "../services/IAMService";
 import React, { useEffect, useState } from "react";
 import { AuthActions } from "../stores/AuthReducer";
-import { MenuBar } from "../components/MenuBar";
 import StartScreen from "../screens/StartScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
@@ -17,6 +16,16 @@ export default function AppContainer() {
 	const dispatch = useDispatch();
 	const isAuth = useSelector((state) => state.auth.isAuthenticated);
 	const [shouldRender, setShouldRender] = useState(false);
+
+	const getData = useCallback(async () => {
+		try {
+			const response = await CurrentUserAPI();
+			setResponseData(response.data);
+		} catch (error) {
+			console.log("Get Data from Order got error");
+		}
+	}, []);
+
 	useEffect(() => {
 		var request = CurrentUserAPI();
 		request
@@ -52,7 +61,7 @@ export default function AppContainer() {
 				<Stack.Screen name="BookingContainer" component={BookingContainer} />
 				<Stack.Screen name="AccountContainer" component={AccountContainer} />
 			</Stack.Navigator>
-			{isAuth && <MenuBar />}
+			{/* {isAuth && <MenuBar />} */}
 		</NavigationContainer>
 	);
 }

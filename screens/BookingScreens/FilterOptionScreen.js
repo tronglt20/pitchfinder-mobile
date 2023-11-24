@@ -4,11 +4,10 @@ import CalenderPicker from "../../components/CalenderPicker";
 import TimePicker from "../../components/TimePicker";
 import PitchTypePicker from "../../components/PitchTypePicker";
 import { useDispatch } from "react-redux";
-import { View, StyleSheet, Alert, Text, TouchableOpacity } from "react-native";
+import { View, Alert, Text, TouchableOpacity } from "react-native";
 import { FilterStoresAPI } from "../../services/PitchService";
 import { PitchActions } from "../../stores/PitchReducer";
 import { MagnifyingGlassIcon as SearchIconOutline } from "react-native-heroicons/outline";
-import { theme } from "../../core/theme";
 
 export default function FilterOptionScreen({ navigation }) {
 	const dispatch = useDispatch();
@@ -64,14 +63,14 @@ export default function FilterOptionScreen({ navigation }) {
 	};
 	return (
 		<Background>
-			<View className="h-full">
-				<Text className="font-bold text-2xl text-center text-primary pb-2">
+			<View className="mt-5 h-full">
+				<Text className="mb-5 font-bold text-2xl text-center text-primary pb-2">
 					Pitch Finder
 				</Text>
 				<CalenderPicker onSelect={setSelectedDate} />
 				<PitchTypePicker onSelect={setSelectedPitchType} />
 				<TimePicker onSelect={setSelectedTime} />
-				<View className="w-full mt-2">
+				<View className="absolute top-[-10px] w-full mt-2">
 					<TouchableOpacity
 						onPress={handleSearch}
 						className="flex self-end items-center w-12 p-2 rounded-full bg-primary shadow-sm "

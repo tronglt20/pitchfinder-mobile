@@ -35,7 +35,7 @@ export default function LoginScreen({ navigation }) {
 				console.error("API call returned an unexpected response:", response);
 			}
 		} catch (error) {
-			console.error("API call failed:", error);
+			console.warn("Invalid Email or Password");
 		}
 	};
 

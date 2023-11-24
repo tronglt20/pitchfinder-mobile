@@ -34,21 +34,16 @@ LogBox.ignoreLogs([
 export const AppNavigation = () => {
 	const dispatch = useDispatch();
 	const isAuth = useSelector((state) => state.auth.isAuthenticated);
-	const [shouldRender, setShouldRender] = useState(false);
 
 	const getRequest = async () => {
 		try {
 			const response = await CurrentUserAPI();
 			if (response.status === 200) {
-				setShouldRender(true);
 				dispatch(AuthActions.setCurrentUser(response));
-			} else {
-				setShouldRender(true);
-				dispatch(AuthActions.logout());
 			}
-			setShouldRender(true);
+			dispatch(AuthActions.logout());
 		} catch (error) {
-			console.log("Got error");
+			console.log("Got error at app navigation");
 		}
 	};
 
@@ -56,9 +51,6 @@ export const AppNavigation = () => {
 		getRequest();
 	}, [dispatch]);
 
-	if (!shouldRender) {
-		return null;
-	}
 	return (
 		<NavigationContainer>
 			<Stack.Navigator

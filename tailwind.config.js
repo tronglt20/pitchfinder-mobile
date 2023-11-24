@@ -9,9 +9,6 @@ module.exports = {
 	],
 	theme: {
 		extend: {
-			fontFamily: {
-				opensans: ["Open Sans", "sans-serif"],
-			},
 			colors: {
 				primary: "#00B14F",
 				secondary: "#002e27",

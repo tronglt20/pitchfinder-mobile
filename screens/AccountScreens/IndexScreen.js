@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Image } from "react-native";
-import Button from "../../components/Button";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import OrderHistory from "../../components/OrderHistory";
 import Background from "../../components/Background";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthActions } from "../../stores/AuthReducer";
 import { GetOrdersAPI } from "../../services/OrderService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ArrowLeftOnRectangleIcon as LogoutIconOutline } from "react-native-heroicons/outline";
 
 const IndexScreen = ({ navigation }) => {
 	const userData = useSelector((state) => state.auth.user);
 	const [orderHistoryData, setOrderHistoryData] = useState(null);
-	const [shouldRender, setShouldRender] = useState(false);
 	const dispatch = useDispatch();
 
+	const getOrderData = async () => {
+		try {
+			const response = await GetOrdersAPI();
+			if (response.status === 200) {
+				setOrderHistoryData(response.data);
+			}
+		} catch {
+			console.log("Error while taking order history");
+		}
+	};
+
 	useEffect(() => {
-		var request = GetOrdersAPI();
-		request
-			.then((response) => {
-				if (response.status == 200) {
-					setOrderHistoryData(response.data);
-				} else {
-					setIsAuth(false);
-				}
-			})
-			.finally(() => {
-				setShouldRender(true);
-			});
+		getOrderData();
 	}, []);
 
 	const handleLogout = () => {
@@ -35,67 +34,36 @@ const IndexScreen = ({ navigation }) => {
 		navigation.navigate("LoginScreen");
 	};
 
-	if (!shouldRender) {
-		return null;
-	}
-
 	return (
 		<Background>
-			<View style={styles.container}>
-				{/* User Information */}
-				<View style={styles.userInfo}>
-					<Text style={styles.userName}>{userData.name.split("@")[0]}</Text>
-					<Text style={styles.userEmail}>{userData.email}</Text>
+			<View className="h-screen">
+				<Text className="text-center text-3xl font-bold text-primary">
+					User Profile
+				</Text>
+				<View className="flex justify-center items-center">
+					<View className="mb-5 w-24 h-24 shadow-lg rounded-full">
+						<Image
+							className="w-full h-full rounded-full"
+							source={require("../../assets/user.webp")}
+						/>
+					</View>
+					<Text className="font-bold text-xl">
+						{userData.name.split("@")[0]}
+					</Text>
+					<Text className="text-lg">{userData.email}</Text>
 				</View>
-
-				{/* Order History */}
 				<OrderHistory orderHistoryData={orderHistoryData} />
-
-				<Button style={styles.btn} title="Logout" onPress={handleLogout} />
+				<View className="absolute top-[-10px] w-full mt-2">
+					<TouchableOpacity
+						onPress={handleLogout}
+						className="flex self-end items-center w-12 p-2 mr-2 rounded-full bg-red-500 shadow-sm"
+					>
+						<LogoutIconOutline size="30" color="#ffffff" />
+					</TouchableOpacity>
+				</View>
 			</View>
 		</Background>
 	);
 };
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-		paddingTop: 300,
-	},
-	avatarContainer: {
-		borderWidth: 2,
-		borderColor: "white",
-		borderRadius: 100,
-		overflow: "hidden",
-	},
-	avatar: {
-		width: 100,
-		height: 100,
-		borderRadius: 50,
-	},
-	userInfo: {
-		alignItems: "center",
-	},
-	userName: {
-		fontSize: 20,
-		fontWeight: "bold",
-	},
-	userEmail: {
-		fontSize: 16,
-		color: "gray",
-	},
-	btn: {
-		color: "white",
-		width: 200,
-		height: 50,
-		borderRadius: 10,
-		backgroundColor: "red",
-		alignItems: "center",
-		justifyContent: "center",
-		marginBottom: 300,
-	},
-});
 
 export default IndexScreen;
