@@ -29,6 +29,7 @@ export default function LoginScreen({ navigation }) {
 			const response = await SigninAPI(email.value, password.value);
 			if (response && response.data && response.data.accessToken) {
 				await AsyncStorage.setItem("accessToken", response.data.accessToken);
+				await AsyncStorage.setItem("isAuthenticated", "true");
 				dispatch(AuthActions.login(response.data));
 				navigation.navigate("Home");
 			} else {

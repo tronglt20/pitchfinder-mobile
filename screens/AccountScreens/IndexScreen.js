@@ -7,11 +7,26 @@ import { AuthActions } from "../../stores/AuthReducer";
 import { GetOrdersAPI } from "../../services/OrderService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ArrowLeftOnRectangleIcon as LogoutIconOutline } from "react-native-heroicons/outline";
+import { CurrentUserAPI } from "../../services/IAMService";
 
 const IndexScreen = ({ navigation }) => {
-	const userData = useSelector((state) => state.auth.user);
-	const [orderHistoryData, setOrderHistoryData] = useState(null);
+	const [user, setUser] = useState({
+		name: "",
+		email: "",
+	});
+	const [orderHistoryData, setOrderHistoryData] = useState([]);
 	const dispatch = useDispatch();
+
+	const getUserData = async () => {
+		try {
+			const response = await CurrentUserAPI();
+			if (response.status === 200) {
+				setUser(response.data);
+			}
+		} catch {
+			console.log("Error while taking user data");
+		}
+	};
 
 	const getOrderData = async () => {
 		try {
@@ -25,11 +40,12 @@ const IndexScreen = ({ navigation }) => {
 	};
 
 	useEffect(() => {
+		getUserData();
 		getOrderData();
 	}, []);
 
-	const handleLogout = () => {
-		AsyncStorage.removeItem("accessToken");
+	const handleLogout = async () => {
+		await AsyncStorage.clear();
 		dispatch(AuthActions.logout());
 		navigation.navigate("LoginScreen");
 	};
@@ -47,10 +63,8 @@ const IndexScreen = ({ navigation }) => {
 							source={require("../../assets/user.webp")}
 						/>
 					</View>
-					<Text className="font-bold text-xl">
-						{userData.name.split("@")[0]}
-					</Text>
-					<Text className="text-lg">{userData.email}</Text>
+					<Text className="font-bold text-xl">{user.name.split("@")[0]}</Text>
+					<Text className="text-lg">{user.email}</Text>
 				</View>
 				<OrderHistory orderHistoryData={orderHistoryData} />
 				<View className="absolute top-[-10px] w-full mt-2">

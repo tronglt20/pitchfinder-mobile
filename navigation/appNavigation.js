@@ -22,6 +22,7 @@ import {
 	HomeIcon as HomeSolid,
 	UserCircleIcon as UserIconSolid,
 } from "react-native-heroicons/solid";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -32,29 +33,12 @@ LogBox.ignoreLogs([
 ]);
 
 export const AppNavigation = () => {
-	const dispatch = useDispatch();
 	const isAuth = useSelector((state) => state.auth.isAuthenticated);
-
-	const getRequest = async () => {
-		try {
-			const response = await CurrentUserAPI();
-			if (response.status === 200) {
-				dispatch(AuthActions.setCurrentUser(response));
-			}
-			dispatch(AuthActions.logout());
-		} catch (error) {
-			console.log("Got error at app navigation");
-		}
-	};
-
-	useEffect(() => {
-		getRequest();
-	}, [dispatch]);
 
 	return (
 		<NavigationContainer>
 			<Stack.Navigator
-				initialRouteName={isAuth ? "BookingContainer" : "StartScreen"}
+				initialRouteName={isAuth ? "HomeTabs" : "StartScreen"}
 				screenOptions={{ contentStyle: { backgroundColor: "white" } }}
 			>
 				<Stack.Screen

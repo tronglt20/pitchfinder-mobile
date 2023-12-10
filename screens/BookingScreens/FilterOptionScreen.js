@@ -8,6 +8,8 @@ import { View, Alert, Text, TouchableOpacity } from "react-native";
 import { FilterStoresAPI } from "../../services/PitchService";
 import { PitchActions } from "../../stores/PitchReducer";
 import { MagnifyingGlassIcon as SearchIconOutline } from "react-native-heroicons/outline";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthActions } from "../../stores/AuthReducer";
 
 export default function FilterOptionScreen({ navigation }) {
 	const dispatch = useDispatch();
@@ -61,6 +63,7 @@ export default function FilterOptionScreen({ navigation }) {
 			console.log(`error`);
 		}
 	};
+
 	return (
 		<Background>
 			<View className="mt-5 h-full">

@@ -1,6 +1,6 @@
-import React from "react";
-import { View, Text, Image, ScrollView } from "react-native";
-import { Button, Card } from "react-native-paper";
+import React, { useState } from "react";
+import { View, Text, Image } from "react-native";
+import { Button } from "react-native-paper";
 import Background from "../../components/Background";
 import BackButton from "../../components/BackButton";
 import { OrderAPI } from "../../services/OrderService";
@@ -12,9 +12,11 @@ import {
 	CalendarDaysIcon as CalendarIconSolid,
 } from "react-native-heroicons/solid";
 import { theme } from "../../core/theme";
+import { FilterStoresAPI } from "../../services/PitchService";
 
 export default function PitchDetailScreen({ navigation, route }) {
 	const filterState = useSelector((state) => state.pitch.filterState);
+
 	const { pitch } = route.params;
 
 	const goBack = () => {
@@ -23,9 +25,10 @@ export default function PitchDetailScreen({ navigation, route }) {
 
 	const orderHandler = async () => {
 		var response = await OrderAPI(pitch.storeId, pitch.price, "");
-		console.log(response);
 		if (response.status == 200) {
 			navigation.navigate("OrderConfirmScreen", { pitch: response.data });
+		} else {
+			console.log(`error`);
 		}
 	};
 
@@ -52,7 +55,7 @@ export default function PitchDetailScreen({ navigation, route }) {
 			<Text className="absolute top-2 text-2xl self-center text-primary font-bold">
 				{pitch.name}
 			</Text>
-			<View className="flex justify-between">
+			<View className="mx-4">
 				<Image
 					source={require("../../assets/pitchImage.png")}
 					className="w-full h-[300px] mt-4 rounded-lg"

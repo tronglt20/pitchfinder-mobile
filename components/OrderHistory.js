@@ -22,10 +22,10 @@ const OrderHistory = ({ orderHistoryData }) => {
 				<View className="w-fit">
 					<FlatList
 						data={orderHistoryData}
-						keyExtractor={(item) => item.id}
+						keyExtractor={(item) => item.orderId}
 						renderItem={({ item }) => (
 							<View
-								key={item.id}
+								key={item.orderId}
 								className="w-[95%] rounded border p-4 bg-secondary mt-2 mx-2 flex flex-row justify-between"
 							>
 								<Text className="text-white font-bold">
