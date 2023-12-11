@@ -73,7 +73,7 @@ export default function FilterOptionScreen({ navigation }) {
 				<CalenderPicker onSelect={setSelectedDate} />
 				<PitchTypePicker onSelect={setSelectedPitchType} />
 				<TimePicker onSelect={setSelectedTime} />
-				<View className="absolute top-[-10px] w-full mt-2">
+				<View className="absolute top-[-20px] right-[10px] w-full mt-2">
 					<TouchableOpacity
 						onPress={handleSearch}
 						className="flex self-end items-center w-12 p-2 rounded-full bg-primary shadow-sm "

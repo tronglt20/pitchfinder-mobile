@@ -1,8 +1,14 @@
 import React from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, Text, FlatList } from "react-native";
+
+const statusEnums = {
+	1: "Pending",
+	2: "Succesed ",
+	3: "Failed",
+	4: "Canceled",
+};
 
 const OrderHistory = ({ orderHistoryData }) => {
-	console.log(orderHistoryData);
 	const formateDate = (createAt) => {
 		const date = new Date();
 		return date.toDateString(createAt);
@@ -32,7 +38,7 @@ const OrderHistory = ({ orderHistoryData }) => {
 									Date: {formateDate(item.createdOn)}
 								</Text>
 								<Text className="text-white font-bold">
-									Status: {item.status}
+									{statusEnums[item.status]}
 								</Text>
 								<Text className="text-primary font-bold">
 									Total: {item.price}vnd

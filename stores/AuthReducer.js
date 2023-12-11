@@ -4,7 +4,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const Store = async () => {
 	const accessToken = await AsyncStorage.getItem("accessToken");
 	if (accessToken !== null) {
-		console.log("accessToken", accessToken);
 		return accessToken;
 	}
 	return "";
@@ -12,8 +11,7 @@ const Store = async () => {
 
 const Auth = async () => {
 	const isAuthenticated = await AsyncStorage.getItem("isAuthenticated");
-	if (isAuthenticated === "true") {
-		console.log("isAuthenticated", isAuthenticated);
+	if (isAuthenticated !== null) {
 		return true;
 	}
 	return false;

@@ -9,7 +9,7 @@ import { View } from "react-native";
 export default function StartScreen({ navigation }) {
 	return (
 		<Background>
-			<View className="flex h-full justify-center items-center">
+			<View className="flex h-full mx-4 justify-center items-center">
 				<Logo />
 				<Header>Pitch Finder</Header>
 				<Paragraph>Wellcome to start with your amazing application.</Paragraph>

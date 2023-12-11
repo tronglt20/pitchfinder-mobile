@@ -1,7 +1,7 @@
 import React from "react";
 import Background from "../../components/Background";
 import { Text, Card, Title } from "react-native-paper";
-import { View, ScrollView, TouchableOpacity } from "react-native";
+import { View, ScrollView, TouchableOpacity, Image } from "react-native";
 import { useSelector } from "react-redux";
 import { StarIcon as StarIconSolid } from "react-native-heroicons/solid";
 
@@ -10,7 +10,6 @@ import { theme } from "../../core/theme";
 
 export default function PitchsScreen({ navigation }) {
 	const pitches = useSelector((state) => state.pitch.pitches);
-	console.log(pitches);
 
 	const goBack = () => {
 		navigation.navigate("FilterOptionScreen");
@@ -27,7 +26,7 @@ export default function PitchsScreen({ navigation }) {
 				key={pitch.storeId}
 				onPress={handlePitchPress}
 			>
-				<View className="w-[98%] h-[300px] mx-1 p-2 bg-white rounded-2xl shadow-md">
+				<View className="h-[300px] mx-4 p-2 bg-white rounded-2xl shadow-sm">
 					<Card.Cover
 						source={
 							pitch.backgroundUrl === null
@@ -73,11 +72,19 @@ export default function PitchsScreen({ navigation }) {
 				<Text className="text-2xl self-center text-primary font-bold">
 					Suitable Pitchs
 				</Text>
-				<View className="h-screen mt-5 z-0">
+				<View className="h-screen mt-4 z-0">
 					{pitches.length > 0 ? (
 						pitches.map(renderPitchItem)
 					) : (
-						<Text>Not Found</Text>
+						<View className="h-[60%] flex items-center justify-center">
+							<Image
+								source={require("../../assets/no-product-8316266-6632286.webp")}
+								className="mb-4 w-40 h-40"
+							/>
+							<Text className="text-red-400 text-center text-3xl">
+								Not found suitable pitch!
+							</Text>
+						</View>
 					)}
 				</View>
 			</ScrollView>

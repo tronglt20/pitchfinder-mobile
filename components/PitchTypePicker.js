@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { theme } from "../core/theme";
+import { Text, View, TouchableOpacity } from "react-native";
 
 export default function PitchTypePicker({ onSelect }) {
 	const [selectedSize, setSelectedSize] = useState("");
@@ -12,7 +11,7 @@ export default function PitchTypePicker({ onSelect }) {
 	};
 
 	return (
-		<View className="w-full px-3 pt-2 mt-2 shadow-sm rounded-xl">
+		<View className="mx-4 bg-white h-[12vh] px-3 pt-2 mt-2 shadow-sm rounded-xl">
 			<Text className="font-bold text-lg text-primary">Pitch Type</Text>
 			<View className="flex mt-2 my-3 flex-row justify-between">
 				{sizes.map((size) => (

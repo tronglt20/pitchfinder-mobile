@@ -42,8 +42,6 @@ export default function SignupScreen({ navigation }) {
 				passwordConfirm.value
 			);
 
-			console.log(response);
-
 			if (response.status == 200) {
 				Alert.alert("Success", "Account created successfully.", [
 					{
@@ -65,41 +63,59 @@ export default function SignupScreen({ navigation }) {
 	return (
 		<Background>
 			<BackButton goBack={navigation.goBack} />
-			<View className="flex h-screen w-full items-center self-center justify-center">
+			<View className="flex h-screen mx-4 w-[95%] items-center self-center justify-center">
 				<Logo />
 				<Header>Create Account</Header>
-				<TextInput
-					label="Email"
-					returnKeyType="next"
-					value={email.value}
-					onChangeText={(text) => setEmail({ value: text, error: "" })}
-					error={!!email.error}
-					errorText={email.error}
-					autoCapitalize="none"
-					autoCompleteType="email"
-					textContentType="emailAddress"
-					keyboardType="email-address"
-				/>
-				<TextInput
-					label="Password"
-					returnKeyType="done"
-					value={password.value}
-					onChangeText={(text) => setPassword({ value: text, error: "" })}
-					error={!!password.error}
-					errorText={password.error}
-					secureTextEntry
-				/>
-				<TextInput
-					label="Confirm Password"
-					returnKeyType="done"
-					value={passwordConfirm.value}
-					onChangeText={(text) =>
-						setPasswordConfirm({ value: text, error: "" })
-					}
-					error={!!passwordConfirm.error}
-					errorText={passwordConfirm.error}
-					secureTextEntry
-				/>
+				<View className="w-full relative">
+					<View className="absolute z-10 bg-secondary px-2 rounded-xl self-start ml-5">
+						<Text className="text-white text-center font-bold text-lg ">
+							Email
+						</Text>
+					</View>
+					<TextInput
+						returnKeyType="next"
+						value={email.value}
+						onChangeText={(text) => setEmail({ value: text, error: "" })}
+						error={!!email.error}
+						errorText={email.error}
+						autoCapitalize="none"
+						autoCompleteType="email"
+						textContentType="emailAddress"
+						keyboardType="email-address"
+					/>
+				</View>
+				<View className="w-full relative">
+					<View className="absolute z-10 bg-secondary px-3 rounded-xl self-start ml-5">
+						<Text className="text-white text-center font-bold text-lg ">
+							Password
+						</Text>
+					</View>
+					<TextInput
+						returnKeyType="done"
+						value={password.value}
+						onChangeText={(text) => setPassword({ value: text, error: "" })}
+						error={!!password.error}
+						errorText={password.error}
+						secureTextEntry
+					/>
+				</View>
+				<View className="w-full relative">
+					<View className="absolute z-10 bg-secondary px-3 rounded-xl self-start ml-5">
+						<Text className="text-white text-center font-bold text-lg ">
+							Confirm Password
+						</Text>
+					</View>
+					<TextInput
+						returnKeyType="done"
+						value={passwordConfirm.value}
+						onChangeText={(text) =>
+							setPasswordConfirm({ value: text, error: "" })
+						}
+						error={!!passwordConfirm.error}
+						errorText={passwordConfirm.error}
+						secureTextEntry
+					/>
+				</View>
 				<Button
 					mode="contained"
 					onPress={onSignUpPressed}

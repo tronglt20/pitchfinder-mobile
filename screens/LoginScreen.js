@@ -12,7 +12,6 @@ import { useDispatch } from "react-redux";
 import { AuthActions } from "../stores/AuthReducer";
 import { SigninAPI } from "../services/IAMService";
 import { EmailValidator } from "../helpers/EmailValidator";
-import { theme } from "../core/theme";
 
 export default function LoginScreen({ navigation }) {
 	const dispatch = useDispatch();
@@ -43,60 +42,55 @@ export default function LoginScreen({ navigation }) {
 	return (
 		<Background>
 			<BackButton goBack={navigation.goBack} />
-			<View className="flex w-full h-full items-center self-center justify-center">
+			<View className="flex mx-4 w-[95%] h-[80vh] items-center self-center justify-center">
 				<Logo />
 				<Header>Welcome back.</Header>
-				<TextInput
-					label="Email"
-					returnKeyType="next"
-					value={email.value}
-					onChangeText={(text) => setEmail({ value: text, error: "" })}
-					error={!!email.error}
-					errorText={email.error}
-					autoCapitalize="none"
-					autoCompleteType="email"
-					textContentType="emailAddress"
-					keyboardType="email-address"
-				/>
-				<TextInput
-					label="Password"
-					returnKeyType="done"
-					value={password.value}
-					onChangeText={(text) => setPassword({ value: text, error: "" })}
-					error={!!password.error}
-					errorText={password.error}
-					secureTextEntry
-				/>
+				<Text className="text-center">
+					Use your credentials below and login to your account
+				</Text>
+				<View className="w-full relative">
+					<View className="absolute z-10 bg-secondary px-2 rounded-xl self-start ml-5">
+						<Text className="text-white text-center font-bold text-lg ">
+							Email
+						</Text>
+					</View>
+					<TextInput
+						returnKeyType="next"
+						value={email.value}
+						onChangeText={(text) => setEmail({ value: text, error: "" })}
+						error={!!email.error}
+						errorText={email.error}
+						autoCapitalize="none"
+						autoCompleteType="email"
+						textContentType="emailAddress"
+						keyboardType="email-address"
+					/>
+				</View>
+				<View className="w-full relative">
+					<View className="absolute z-10 bg-secondary px-3 rounded-xl self-start ml-5">
+						<Text className="text-white text-center font-bold text-lg ">
+							Password
+						</Text>
+					</View>
+					<TextInput
+						returnKeyType="done"
+						value={password.value}
+						onChangeText={(text) => setPassword({ value: text, error: "" })}
+						error={!!password.error}
+						errorText={password.error}
+						secureTextEntry
+					/>
+				</View>
 				<Button mode="contained" onPress={onLoginPressed}>
 					Login
 				</Button>
-				<View style={styles.row}>
+				<View className="flex flex-row mt-2">
 					<Text>Don’t have an account? </Text>
 					<TouchableOpacity onPress={() => navigation.replace("SignupScreen")}>
-						<Text style={styles.link}>Sign up</Text>
+						<Text className="font-bold text-primary">Sign up</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
 		</Background>
 	);
 }
-
-const styles = StyleSheet.create({
-	forgotPassword: {
-		width: "100%",
-		alignItems: "flex-end",
-		marginBottom: 24,
-	},
-	row: {
-		flexDirection: "row",
-		marginTop: 4,
-	},
-	forgot: {
-		fontSize: 13,
-		color: theme.colors.secondary,
-	},
-	link: {
-		fontWeight: "bold",
-		color: theme.colors.primary,
-	},
-});

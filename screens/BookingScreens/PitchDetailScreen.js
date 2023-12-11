@@ -52,15 +52,18 @@ export default function PitchDetailScreen({ navigation, route }) {
 	return (
 		<Background>
 			<BackButton goBack={goBack} />
-			<Text className="absolute top-2 text-2xl self-center text-primary font-bold">
-				{pitch.name}
+			<Text className="absolute top-4 text-2xl self-center text-primary font-bold">
+				Pitch Detail
 			</Text>
-			<View className="mx-4">
+			<View className="mx-4 h-[80vh]">
 				<Image
 					source={require("../../assets/pitchImage.png")}
-					className="w-full h-[300px] mt-4 rounded-lg"
+					className="w-full h-[300px] my-4 rounded-lg"
 				/>
-				<View className="flex">
+				<View className="flex gap-2">
+					<Text className="text-2xl text-secondary font-bold">
+						{pitch.name}
+					</Text>
 					<View className="flex flex-row">
 						<Text className="text-lg font-bold text-primary">
 							{pitch.type} Size 5

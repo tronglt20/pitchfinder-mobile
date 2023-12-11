@@ -49,7 +49,7 @@ export default function TimePicker({ onSelect }) {
 	};
 
 	return (
-		<View className="w-full px-3 py-2 mt-2 shadow-sm rounded-xl">
+		<View className=" mx-4 px-3 py-2 h-[12vh] mt-2 bg-white shadow-sm rounded-xl">
 			<Text className="font-bold text-lg text-primary">Time Frame</Text>
 			<View className="flex flex-row">
 				<TouchableOpacity

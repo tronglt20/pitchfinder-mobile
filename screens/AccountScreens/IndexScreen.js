@@ -2,12 +2,19 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import OrderHistory from "../../components/OrderHistory";
 import Background from "../../components/Background";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AuthActions } from "../../stores/AuthReducer";
 import { GetOrdersAPI } from "../../services/OrderService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ArrowLeftOnRectangleIcon as LogoutIconOutline } from "react-native-heroicons/outline";
 import { CurrentUserAPI } from "../../services/IAMService";
+
+const statusEnums = {
+	1: "Pending",
+	2: "Succesed ",
+	3: "Failed",
+	4: "Canceled",
+};
 
 const IndexScreen = ({ navigation }) => {
 	const [user, setUser] = useState({
@@ -45,9 +52,10 @@ const IndexScreen = ({ navigation }) => {
 	}, []);
 
 	const handleLogout = async () => {
-		await AsyncStorage.clear();
+		await AsyncStorage.removeItem("accessToken");
+		await AsyncStorage.removeItem("isAuthenticated");
 		dispatch(AuthActions.logout());
-		navigation.navigate("LoginScreen");
+		navigation.navigate("StartScreen");
 	};
 
 	return (
