@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CurrentUserAPI } from "../services/IAMService";
 import { AuthActions } from "../stores/AuthReducer";
 
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { LogBox, Text, View, Platform } from "react-native";
@@ -116,13 +116,6 @@ const menuIcons = (route, focused) => {
 		) : (
 			<UserIconOutline size="30" strokeWidth={2} color="white" />
 		);
-
-		// } else if (route.name === "cart") {
-		// 	icon = focused ? (
-		// 		<BagSolid size="30" color={themeColors.bgLight} />
-		// 	) : (
-		// 		<BagOutline size="30" strokeWidth={2} color="white" />
-		// 	);
 	}
 
 	let buttonClass = focused ? "bg-white shadow" : "";

@@ -8,8 +8,11 @@ import { GetOrdersAPI } from "../../services/OrderService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ArrowLeftOnRectangleIcon as LogoutIconOutline } from "react-native-heroicons/outline";
 import { CurrentUserAPI } from "../../services/IAMService";
+import { useIsFocused } from "@react-navigation/native";
 
 const IndexScreen = ({ navigation }) => {
+	const isFocused = useIsFocused();
+
 	const [user, setUser] = useState({
 		name: "",
 		email: "",
@@ -34,16 +37,17 @@ const IndexScreen = ({ navigation }) => {
 			if (response.status === 200) {
 				setOrderHistoryData(response.data);
 			}
-			console.log(response.data);
 		} catch {
 			console.log("Error while taking order history");
 		}
 	};
 
 	useEffect(() => {
-		getUserData();
-		getOrderData();
-	}, []);
+		if (isFocused) {
+			getUserData();
+			getOrderData();
+		}
+	}, [isFocused]);
 
 	const handleLogout = async () => {
 		await AsyncStorage.removeItem("accessToken");
