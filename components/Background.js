@@ -4,7 +4,6 @@ import {
 	KeyboardAvoidingView,
 	SafeAreaView,
 } from "react-native";
-import { theme } from "../core/theme";
 
 export default function Background({ children }) {
 	return (

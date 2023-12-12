@@ -12,7 +12,6 @@ import {
 	CalendarDaysIcon as CalendarIconSolid,
 } from "react-native-heroicons/solid";
 import { theme } from "../../core/theme";
-import { FilterStoresAPI } from "../../services/PitchService";
 
 export default function PitchDetailScreen({ navigation, route }) {
 	const filterState = useSelector((state) => state.pitch.filterState);
@@ -48,6 +47,8 @@ export default function PitchDetailScreen({ navigation, route }) {
 			endTime
 		).padStart(2, "0")}:00`;
 	}
+
+	console.log(pitch);
 
 	return (
 		<Background>
@@ -96,7 +97,9 @@ export default function PitchDetailScreen({ navigation, route }) {
 						<View className="p-2 flex flex-row items-center gap-1">
 							<View className="flex flex-row bg-secondary w-8 h-8 items-center rounded-full">
 								<StarIconSolid size="12" color={theme.colors.primary} />
-								<Text className="text-xs text-primary">{`${pitch.rating}/5`}</Text>
+								<Text className="text-xs text-primary">{`${
+									pitch.rating !== undefined ? pitch.rating : "5"
+								}/5`}</Text>
 							</View>
 							<Text className="text-lg pr-2">{`${pitch.price}vnđ`}/hour</Text>
 						</View>

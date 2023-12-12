@@ -3,7 +3,7 @@ import { View, Text, FlatList } from "react-native";
 
 const statusEnums = {
 	1: "Pending",
-	2: "Succesed ",
+	2: "Succeed ",
 	3: "Failed",
 	4: "Canceled",
 };
@@ -14,7 +14,7 @@ const OrderHistory = ({ orderHistoryData }) => {
 		return date.toDateString(createAt);
 	};
 	return (
-		<View className="h-screen">
+		<View className="h-[60vh]">
 			<Text className="ml-2 text-2xl font-bold text-primary">
 				Order History
 			</Text>

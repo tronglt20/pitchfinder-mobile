@@ -9,13 +9,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ArrowLeftOnRectangleIcon as LogoutIconOutline } from "react-native-heroicons/outline";
 import { CurrentUserAPI } from "../../services/IAMService";
 
-const statusEnums = {
-	1: "Pending",
-	2: "Succesed ",
-	3: "Failed",
-	4: "Canceled",
-};
-
 const IndexScreen = ({ navigation }) => {
 	const [user, setUser] = useState({
 		name: "",
@@ -41,6 +34,7 @@ const IndexScreen = ({ navigation }) => {
 			if (response.status === 200) {
 				setOrderHistoryData(response.data);
 			}
+			console.log(response.data);
 		} catch {
 			console.log("Error while taking order history");
 		}
